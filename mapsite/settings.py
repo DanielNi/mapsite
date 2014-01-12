@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'myapp',
     'south',
+    'markdown_deux',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,9 @@ ROOT_URLCONF = 'mapsite.urls'
 
 WSGI_APPLICATION = 'mapsite.wsgi.application'
 
+TEMPLATE_DIRS = (
+'/Users/DanNi/projects/new_project/mapsite/templates'
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
