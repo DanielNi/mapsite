@@ -8,6 +8,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+from django.core.urlresolvers import reverse_lazy
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -100,3 +102,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     'templates/static/',
 )
+
+LOGIN_URL=reverse_lazy('login')
+
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+LOGOUT_URL=reverse_lazy('logout')

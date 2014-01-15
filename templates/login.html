@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>Where I've Been</title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+      <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}"/>
+</head>
+<body>
+
+<div class="container">
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+  {% csrf_token %}
+   <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
+        <input type="text" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+    </div>
+<!--   <table>
+    <tr>
+      <td>{{ form.username.label_tag }}</td>
+      <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.password.label_tag }}</td>
+      <td>{{ form.password }}</td>
+    </tr>
+  </table>
+  
+  <input type="submit" value="login" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form> -->
+
+</body>
+</html>

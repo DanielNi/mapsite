@@ -9,5 +9,11 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'myapp.views.index')
+    url(r'^$', 'myapp.views.index', name="homepage"),
+    url(r'^home/$', 'myapp.views.index', name="home"),
+
+    url(r'^login/$', 'django.contrib.auth.views.login', {
+    	'template_name': 'login.html'}, name="login"),
+	url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
+    	name="logout"),
 )
