@@ -4,30 +4,57 @@
 
 <html>
 <head>
-  <title>Where I've Been</title>
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+  <title>Travel Tracker</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
       <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-<div class="container">
-
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-<form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
-  {% csrf_token %}
-   <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
-        <input type="text" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Travel Tracker</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div>
+      </div>
     </div>
+
+    <div class="container">
+
+    <form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
+    <h3 class="tagline"> Show the world where you've been. </h3>
+        <input type="text" class="form-control" placeholder="Email" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+    </div>
+
 <!--   <table>
     <tr>
       <td>{{ form.username.label_tag }}</td>

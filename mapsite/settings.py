@@ -38,9 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',
     'south',
     'markdown_deux',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -108,3 +108,5 @@ LOGIN_URL=reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 LOGOUT_URL=reverse_lazy('logout')
+
+ACCOUNT_ACTIVATION_DAYS = 7

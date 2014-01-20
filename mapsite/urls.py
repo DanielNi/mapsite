@@ -12,8 +12,12 @@ urlpatterns = patterns('',
     url(r'^$', 'myapp.views.index', name="homepage"),
     url(r'^home/$', 'myapp.views.index', name="home"),
 
-    url(r'^login/$', 'django.contrib.auth.views.login', {
-    	'template_name': 'login.html'}, name="login"),
-	url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
-    	name="logout"),
+ #    url(r'^login/$', 'django.contrib.auth.views.login', {
+ #    	'template_name': 'login.html'}, name="login"),
+	# url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
+ #    	name="logout"),
+
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^accounts/', include('registration.auth_urls')),
 )
+
