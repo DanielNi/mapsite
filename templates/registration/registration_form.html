@@ -2,10 +2,45 @@
 {% load i18n %}
 
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
+    <div class="container">
 
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
+    <form class="form-register" role="form" method="post" action=".">
+    {% csrf_token %}
+    <h2 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
+    <h3 class="tagline"> Show the world where you've been. </h3>
+<!--         <input type="text" class="form-control" placeholder="Email" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required> -->
+
+<!--     {% for field in form %}
+        <div class="form-control">
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+
+        </div>
+    {% endfor %} -->
+
+        <input id="id_username" type="text" name="username" maxlength="30" class="form-control" placeholder="Username" required autofocus>
+
+        <input type="text" name="email" id="id_email" class="form-control" placeholder="Email" required>
+
+        <input type="password" name="password1" id="id_password" class="form-control" placeholder="Password" required>
+
+        <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Password again" required>
+
+<!--         {% if form.errors %}
+        <p>Invalid data. Please try again.</p>
+        {% endif %} -->
+      
+    	{{ form.non_field_errors }}
+        {{ form.username.errors }}
+        {{ form.email.errors }}
+        {{ form.password.errors }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      </form>
+
+    <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3>
+
+    </div>
+
+
 {% endblock %}

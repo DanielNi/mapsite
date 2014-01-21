@@ -1,10 +1,16 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
 <html>
 <head>
   <title>Travel Tracker</title>
   <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'register.css' %}"/>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<h1>Travel Tracker</h1>
 
 {% block content %}
 {% endblock %}
