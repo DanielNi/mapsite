@@ -17,7 +17,7 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static 'register.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}"/>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -51,20 +51,29 @@
 
     <div class="container">
 
-    <form class="form-register" role="form" method="post" action=".">
+<!--     <form class="form-register" role="form" method="post" action=".">
     {% csrf_token %}
     <h2 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
     <h3 class="tagline"> Show the world where you've been. </h3>
         <input type="text" class="form-control" placeholder="Email" required autofocus>
         <input type="password" class="form-control" placeholder="Password" required>
-<!--         {{ form.as_p }} -->
+<!--         {{ form.as_p }}
         {% if form.errors %}
         <p>Invalid data. Please try again.</p>
         {% endif %}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
 
-    <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3>
+    <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3> --> -->
+
+     <div class="jumbotron">
+        <h1>Travel Tracker</h1>
+        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started &raquo;</a>
+        </p>
+      </div>
+
 
     </div>
 

@@ -105,7 +105,7 @@ STATICFILES_DIRS = (
 
 LOGIN_URL=reverse_lazy('login')
 
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = '/users/profile'
 
 LOGOUT_URL=reverse_lazy('logout')
 

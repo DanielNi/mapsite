@@ -10,6 +10,10 @@ from django.views.generic.edit import FormView
 from registration import signals
 from registration.forms import RegistrationForm
 
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+
 
 class _RequestPassingFormView(FormView):
     """
@@ -140,3 +144,7 @@ class ActivationView(TemplateView):
 
     def get_success_url(self, request, user):
         raise NotImplementedError
+
+@login_required
+def profile(request):
+    return HttpResponseRedirect(request.user.username)

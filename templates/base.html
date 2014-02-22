@@ -12,6 +12,20 @@
 </head>
 <body>
 
+	   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+
+          <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
+
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'homepage' %}">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+
+      </div>
+    </div>
+
 {% block content %}
 {% endblock %}
 
