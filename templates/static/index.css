@@ -18,9 +18,8 @@
 
 h1 {
   font-family: 'Lobster', cursive;
-  color: white;
   font-size: 56px;
-  text-shadow: 2px 2px 0px #FF0000;
+  text-shadow: 2px 2px 0px white;
 }
 
 body {
