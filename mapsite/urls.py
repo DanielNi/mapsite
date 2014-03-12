@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^', include('registration.auth_urls')),
 
     url(r'^users/profile', 'registration.views.profile'),
+    url(r'^users/', 'profiles.views.profile'),
 )

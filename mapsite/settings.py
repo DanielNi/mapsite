@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'south',
     'markdown_deux',
     'registration',
+    'profiles',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,3 +111,5 @@ LOGIN_REDIRECT_URL = '/users/profile'
 LOGOUT_URL=reverse_lazy('logout')
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
