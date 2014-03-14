@@ -26,3 +26,11 @@ body {
   background-image: url('background.jpeg');
   background-size: cover;
 }
+
+.login {
+  font-size: 16px;
+}
+
+.login:hover {
+  text-decoration: none;
+}

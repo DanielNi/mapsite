@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    test = models.BooleanField()
+    test = models.NullBooleanField(default=True)
+    # username = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.user.username
