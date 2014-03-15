@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
 
           <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
@@ -63,6 +63,9 @@
 
       <button class="btn btn-lg btn-primary btn-block" type="submit" value="{% trans 'Log in' %}">Sign in</button>
       <input type="hidden" name="next" value="{{ next }}" />
+
+        <h3 class="forgot"><a href="#"> Forgot your password? </a></h3>
+
     </form>
 
 <!-- <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>

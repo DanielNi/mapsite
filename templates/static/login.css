@@ -1,6 +1,12 @@
 body {
-  background-image: url('background.jpeg');
-  background-size: cover;
+  background-color: rgba(0,90,151,0.4);
+  /*background-image: url('background.jpeg');
+  background-size: cover;*/
+}
+
+.navbar-default {
+  background-color: rgba(255,255,255,0.7);
+  border-color: rgba(255,255,255,0.7);
 }
 
 .navbar-brand {
@@ -16,20 +22,24 @@ body {
   font-size: 12px;
 }
 
-a {
-  color: black;
-}
-
-a:hover {
-  color: white;
-  text-decoration: none;
-  text-shadow: 0px 0px 2px black;
-}
-
 p {
   font-family: 'Lato', sans-serif;
   color: white;
   font-size: 20px;
+}
+
+.forgot {
+  font-size: 14px;
+  text-align: center;
+}
+
+.forgot a {
+  color: #484848;
+}
+
+.forgot a:hover {
+  color: black;
+  text-decoration: none;
 }
 
 .errors {
@@ -51,6 +61,14 @@ p {
   text-align: center;
   font-size: 56px;
   text-shadow: 2px 2px 0px white;
+}
+.form-signin-heading a {
+  color: black;
+}
+.form-signin-heading a:hover {
+  color: white;
+  text-decoration: none;
+  text-shadow: none;
 }
 .form-signin .checkbox {
   margin-bottom: 10px;

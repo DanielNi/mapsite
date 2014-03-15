@@ -4,39 +4,36 @@
 {% load i18n %}
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>Travel Tracker</title>
+  <title>Travel Tracker</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+  <!-- Bootstrap core CSS -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}"/>
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}"/>
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+      <![endif]-->
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
-  </head>
+    </head>
 
-  <body>
+    <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
 
           <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
 
@@ -46,43 +43,22 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
 
-      </div>
-    </div>
-
-    <div class="container">
-
-<!--     <form class="form-register" role="form" method="post" action=".">
-    {% csrf_token %}
-    <h2 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
-    <h3 class="tagline"> Show the world where you've been. </h3>
-        <input type="text" class="form-control" placeholder="Email" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-<!--         {{ form.as_p }}
-        {% if form.errors %}
-        <p>Invalid data. Please try again.</p>
-        {% endif %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-      </form>
-
-    <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3> --> -->
-
-     <div class="jumbotron">
-        <h1>Travel Tracker</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started &raquo;</a>
-          <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
-        </p>
+        </div>
       </div>
 
+      <div class="container">
 
-    </div>
+        <div class="jumbotron">
+          <h1>Travel Tracker</h1>
+          <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+          <p>
+            <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started &raquo;</a>
+            <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
+          </p>
+        </div>
 
-<!--     <form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register" />
-    </form> -->
+
+      </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -90,4 +66,4 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   </body>
-</html>
+  </html>

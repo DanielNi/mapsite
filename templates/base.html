@@ -12,22 +12,22 @@
 </head>
 <body>
 
-	   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
 
-          <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
+      <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
 
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
 
-      </div>
     </div>
+  </div>
 
-{% block content %}
-{% endblock %}
+  {% block content %}
+  {% endblock %}
 
 </body>
 </html>

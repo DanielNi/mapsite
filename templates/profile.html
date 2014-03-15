@@ -5,33 +5,92 @@
 
 <html>
 <head>
-  <title>Travel Tracker</title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-      <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}"/>
+	<title>Travel Tracker</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}"/>
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	html { height: 100% }
+	body { height: 100%; margin: 0; padding: 0 }
+	#map-canvas { height: 100% }
+	</style>
+	<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true">
+	</script>
+	<script type="text/javascript">
+	function initialize() {
+		var styles = [
+		{
+			featureType: "administrative.country",
+			stylers: [
+			{ visibility: "on" }
+			]
+		},{
+			featureType: "administrative.province",
+			stylers: [
+			{ visibility: "on" }
+			]
+		},{
+			featureType: "landscape",
+			stylers: [
+			{ visibility: "off" }
+			]
+		},{
+			featureType: "poi",
+			stylers: [
+			{ visibility: "off" }
+			]
+		},{
+			featureType: "road",
+			stylers: [
+			{ visibility: "off" }
+			]
+		}
+		]
+		var mapOptions = {
+			zoom: 2,
+			center: new google.maps.LatLng(25, 0),
+			mapTypeControl: false,
+			panControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			},
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			},
+			styles: styles
+		};
+		var map = new google.maps.Map(document.getElementById("map-canvas"),
+			mapOptions);
+
+		var layer = new google.maps.FusionTablesLayer({
+			query: {
+				select: 'Geocodable address',
+				from: '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ'
+			},
+		});
+		layer.setMap(map);
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
 
-          <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
+			<a class="navbar-brand" href="#">Travel Tracker</a>
 
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+			{% if user.is_authenticated %}
+			<p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
+			{% endif %}
 
-          {% if user.is_authenticated %}
-          <p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a></p>
-          {% endif %}
+		</div>
+	</div>
 
-      </div>
-    </div>
-
+	<div id="map-canvas"/>
 </body>
 </html>
