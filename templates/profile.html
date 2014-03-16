@@ -66,13 +66,40 @@
 		var map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
 
+		// var CountryName = "Israel";
+
+		// var FT_Query = "SELECT 'kml_4326' FROM "+FT_TableID+" WHERE 'name_0' = '"+CountryName+"';";
+		// var FT_Options = { suppressInfoWindows: true, query:FT_Query };
+		// document.getElementById("FTquery").innerHTML = FT_Query; 
+		// layer = new google.maps.FusionTablesLayer(FT_TableID, FT_Options);
+		// layer.setMap(map);
+
+
 		var layer = new google.maps.FusionTablesLayer({
 			query: {
-				select: 'Geocodable address',
-				from: '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ'
+				select: 'kml_4326',
+				from: '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ',
 			},
+			styles: [{
+				polygonOptions: {
+					fillColor: "#FFFFFF",
+					fillOpacity: 0.0
+				}
+			}]
 		});
 		layer.setMap(map);
+		google.maps.event.addListener(layer,'click',function(e) {
+			var countryName = e.row['sovereignt'].value;
+			layer.set("styles", [{
+				where: "'sovereignt' == '+countryName+'", 
+				polygonOptions : {
+					fillColor : '#008C00', 
+					fillOpacity : 0.5, 
+				}
+			} 
+			]);
+		}
+		);
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
@@ -82,10 +109,10 @@
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 
-			<a class="navbar-brand" href="#">Travel Tracker</a>
+			<a class="navbar-brand" href="{% url 'home' %}">Travel Tracker</a>
 
 			{% if user.is_authenticated %}
-			<p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
+			<p class="navbar-text navbar-right">Hello there, <a href="{% url 'profile' %}" class="navbar-link">{{ user.username }}</a>!&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="{% url 'auth_logout' %}" class="navbar-link">Log out</a></p>
 			{% endif %}
 
 		</div>

@@ -44,9 +44,9 @@ p {
 
 .errors {
   font-family: 'Lato', sans-serif;
-  color: white;
-  padding: 5px;
-  list-style-type: none; #fix this somehow
+  font-size: 14px;
+  margin: 10px;
+  list-style: none; #fix this somehow
 }
 
 .form-signin {

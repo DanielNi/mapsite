@@ -29,14 +29,17 @@ body {
 }
 
 .login {
-  color: white;
-  text-decoration: none;
   text-align: center;
   font-size: 14px;
 }
 
 .login a {
   color: #484848;
+}
+
+.login a:hover {
+  text-decoration: none;
+  color: black;
 }
 
 .form-register {
