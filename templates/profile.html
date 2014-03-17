@@ -21,6 +21,7 @@
 	<script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true">
 	</script>
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
 	<script type="text/javascript">
 	function initialize() {
 		var styles = [
@@ -66,43 +67,131 @@
 		var map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
 
-		// var CountryName = "Israel";
-
-		// var FT_Query = "SELECT 'kml_4326' FROM "+FT_TableID+" WHERE 'name_0' = '"+CountryName+"';";
-		// var FT_Options = { suppressInfoWindows: true, query:FT_Query };
-		// document.getElementById("FTquery").innerHTML = FT_Query; 
-		// layer = new google.maps.FusionTablesLayer(FT_TableID, FT_Options);
-		// layer.setMap(map);
-
+		var tableID = '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ';
 
 		var layer = new google.maps.FusionTablesLayer({
 			query: {
 				select: 'kml_4326',
-				from: '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ',
+				from: tableID,
+				// where: "name = '"+countryName+"'"
 			},
 			styles: [{
 				polygonOptions: {
 					fillColor: "#FFFFFF",
-					fillOpacity: 0.0
+					fillOpacity: 0
 				}
 			}]
 		});
 		layer.setMap(map);
+
+		// var infobox = new InfoBox({
+		// 	content: document.getElementById("infobox"),
+		// 	disableAutoPan: false,
+		// 	maxWidth: 0,
+		// 	pixelOffset: new google.maps.Size(-140, 0),
+		// 	boxStyle: {
+		// 		background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+		// 		opacity: 0.75,
+		// 		width: "280px"
+		// 	},
+		// 	closeBoxMargin: "12px 4px 2px 2px",
+		// 	closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+		// 	infoBoxClearance: new google.maps.Size(1, 1)
+		// });
+
+		var infowindow = new google.maps.InfoWindow();
+		var color = '#008C00'
 		google.maps.event.addListener(layer,'click',function(e) {
-			var countryName = e.row['sovereignt'].value;
+			var countryName = e.row['name'].value;
+			// var contentString = document.getElementById("infowindow");
+			var contentString =
+			'<div id="content">'+
+			'<h3 class="firstHeading">'+countryName+'</h3>'+
+			'<div id="bodyContent">'+
+			"<label class='choice' for='live'>"+
+			"<input id='live' type='radio' name='choice' value='#008C00' />"+
+			"<a class='Live'>◼ I've lived here.</a>"+
+			"</label><br>"+
+			"<label class='choice' for='been'>"+
+			"<input id='been' type='radio' name='choice' value='#003399' />"+
+			"<a class='Been'>◼ I've been here.</a>"+
+			"</label><br>"+
+			"<label class='choice' for='cancel'>"+
+			"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+			"<a class='Cancel'>◻ Cancel</a>"+
+			"</label>"+
+			'</div>'+
+			"</div>";
+			var styling = [];
+			infowindow.setContent(contentString);
+			infowindow.setPosition(new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()));
 			layer.set("styles", [{
-				where: "'sovereignt' == '+countryName+'", 
-				polygonOptions : {
-					fillColor : '#008C00', 
-					fillOpacity : 0.5, 
+				polygonOptions: {
+					fillColor: '#FFFFFF',
+					fillOpacity: 0
 				}
-			} 
+			},	{
+				where: "name = '"+countryName+"'", 
+				polygonOptions: {
+					fillColor: color, 
+					fillOpacity: 0.5, 
+				}
+			}
 			]);
+			infowindow.open(map);
+			google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
+				color = this.value;
+				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
+				polygonOptions: {
+					fillColor: '#FFFFFF',
+					fillOpacity: 0
+				}
+			},	{
+				where: "name = '"+countryName+"'", 
+				polygonOptions: {
+					fillColor: color, 
+					fillOpacity: 0.5, 
+				}
+			}
+			]);
+			});
+			google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
+				color = this.value;
+				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
+				polygonOptions: { // Also it doesn't even work because when you change countries you can no longer change the color
+					fillColor: '#FFFFFF',
+					fillOpacity: 0
+				}
+			},	{
+				where: "name = '"+countryName+"'", 
+				polygonOptions: {
+					fillColor: color, 
+					fillOpacity: 0.5, 
+				}
+			}
+			]);
+			});
+			google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
+				color = this.value;
+				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
+				polygonOptions: {
+					fillColor: '#FFFFFF',
+					fillOpacity: 0
+				}
+			},	{
+				where: "name = '"+countryName+"'", 
+				polygonOptions: {
+					fillColor: color, 
+					fillOpacity: 0.5, 
+				}
+			}
+			]);
+			});
+		});
 		}
-		);
-	}
-	google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
 </head>
 <body>
 
@@ -117,6 +206,15 @@
 
 		</div>
 	</div>
+
+<!-- 	<div class="infobox-wrapper">
+		<div id="infobox">
+			The contents of your info box. It's very easy to create and customize.
+		</div>
+	</div> -->
+<!-- 	<div id="infowindow">
+		TESTIFJASDOFJSDOIJSOD
+	</div> -->
 
 	<div id="map-canvas"/>
 </body>
