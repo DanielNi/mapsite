@@ -2,14 +2,14 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="container">
+<div class="container">
 
     <form class="form-register" role="form" method="post" action=".">
-    {% csrf_token %}
-    <h1 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h1>
-    <h3 class="tagline"> Show the world where you've been. </h3>
+        {% csrf_token %}
+        <h1 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h1>
+        <!-- <h3 class="tagline"> Show the world where you've been. </h3> -->
 <!--         <input type="text" class="form-control" placeholder="Email" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required> -->
+    <input type="password" class="form-control" placeholder="Password" required> -->
 
 <!--     {% for field in form %}
         <div class="form-control">
@@ -17,7 +17,7 @@
             {{ field.label_tag }}: {{ field }}
 
         </div>
-    {% endfor %} -->
+        {% endfor %} -->
 
         <input id="id_username" type="text" name="username" maxlength="30" class="form-control" placeholder="Username" required autofocus>
 
@@ -30,17 +30,17 @@
 <!--         {% if form.errors %}
         <p>Invalid data. Please try again.</p>
         {% endif %} -->
-      
-    	{{ form.non_field_errors }}
+        
+        {{ form.non_field_errors }}
         {{ form.username.errors }}
         {{ form.email.errors }}
         {{ form.password.errors }}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-      </form>
+    </form>
 
     <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3>
 
-    </div>
+</div>
 
 
 {% endblock %}

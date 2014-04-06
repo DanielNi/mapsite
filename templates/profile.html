@@ -7,7 +7,6 @@
 <head>
 	<title>Travel Tracker</title>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-	<!-- Custom styles for this template -->
 	<link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}"/>
 
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
@@ -56,6 +55,9 @@
 			zoom: 2,
 			center: new google.maps.LatLng(25, 0),
 			mapTypeControl: false,
+			streetViewControl: false,
+			minZoom: 2,
+			maxZoom: 6,
 			panControlOptions: {
 				position: google.maps.ControlPosition.LEFT_CENTER
 			},
@@ -99,9 +101,16 @@
 		// 	infoBoxClearance: new google.maps.Size(1, 1)
 		// });
 
-		var infowindow = new google.maps.InfoWindow();
-		var color = '#008C00'
+		var infowindow;
+		var visited = new Array();
+		var lived = new Array();
+
 		google.maps.event.addListener(layer,'click',function(e) {
+			if (typeof infowindow !== 'undefined') {
+				infowindow.close();
+			}
+			var color = '#003399'
+			infowindow = new google.maps.InfoWindow();
 			var countryName = e.row['name'].value;
 			// var contentString = document.getElementById("infowindow");
 			var contentString =
@@ -122,26 +131,62 @@
 			"</label>"+
 			'</div>'+
 			"</div>";
-			var styling = [];
+
+			// var geocoder = new google.maps.Geocoder();
+		 //    geocoder.geocode( { 'address': countryName}, function(results, status) {
+		 //    	var swlat = results[0].geometry.viewport.getSouthWest().lat();
+		 //    	var swlng = results[0].geometry.viewport.getSouthWest().lng();
+		 //    	var nelat = results[0].geometry.viewport.getNorthEast().lat();
+		 //    	var nelng = results[0].geometry.viewport.getNorthEast().lng();
+		 //      if (status == google.maps.GeocoderStatus.OK) {
+		 //        map.setCenter(results[0].geometry.location);
+		 //        map.fitBounds(results[0].geometry.viewport);
+		 //      }
+		 //    });
+
 			infowindow.setContent(contentString);
 			infowindow.setPosition(new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()));
+			map.setCenter(infowindow.getPosition());
+			if (map.getZoom() < 4) {
+				map.setZoom(4);
+			}
+			infowindow.open(map);
+			// var country = new google.maps.FusionTablesLayer({
+			// 	query: {
+			// 		select: 'kml_4326',
+			// 		from: tableID,
+			// 		where: "name = '"+countryName+"'"
+			// 	},
+			// 	styles: [{
+			// 		polygonOptions: {
+			// 			fillColor: color,
+			// 			fillOpacity: 0.5
+			// 		}
+			// 	}]
+			// });
+			// country.setMap(map);
+			if (visited.indexOf(countryName) === -1) {
+				visited.push(countryName);
+			}
 			layer.set("styles", [{
 				polygonOptions: {
 					fillColor: '#FFFFFF',
 					fillOpacity: 0
 				}
 			},	{
-				where: "name = '"+countryName+"'", 
+				where: "name = '"+countryName+"'",
 				polygonOptions: {
 					fillColor: color, 
 					fillOpacity: 0.5, 
 				}
 			}
 			]);
-			infowindow.open(map);
 			google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
 				color = this.value;
-				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
+				if (visited.indexOf(countryName) === -1) {
+					visited.push(countryName);
+				}
+				layer.set("styles", [{
 				polygonOptions: {
 					fillColor: '#FFFFFF',
 					fillOpacity: 0
@@ -157,8 +202,11 @@
 			});
 			google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
 				color = this.value;
-				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
-				polygonOptions: { // Also it doesn't even work because when you change countries you can no longer change the color
+				if (lived.indexOf(countryName) === -1) {
+					lived.push(countryName);
+				}
+				layer.set("styles", [{
+				polygonOptions: {
 					fillColor: '#FFFFFF',
 					fillOpacity: 0
 				}
@@ -173,7 +221,15 @@
 			});
 			google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
 				color = this.value;
-				layer.set("styles", [{ //There has to be a better way to do this than to reset the layer everytime
+				var indlive = lived.indexOf(countryName);
+				var indbeen = visited.indexOf(countryName);
+				if (indlive > -1) {
+					lived.splice(indlive, 1);
+				}
+				if (indbeen > -1) {
+					visited.splice(indbeen, 1);
+				}
+				layer.set("styles", [{
 				polygonOptions: {
 					fillColor: '#FFFFFF',
 					fillOpacity: 0

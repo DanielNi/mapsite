@@ -27,41 +27,40 @@
 
       <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
       <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
 
     </head>
 
     <body>
 
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+
+            <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{% url 'homepage' %}">Home</a></li>
+              <li><a href="{% url 'about' %}">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+            <p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
+            {% endif %}
+
+          </div>
+        </div>
         <div class="container">
 
-          <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
-
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          {% if user.is_authenticated %}
-          <p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
-          {% endif %}
-
-        </div>
-      </div>
-
-      <div class="container">
-
-        <div class="jumbotron">
-          <h1>Travel Tracker</h1>
-          <p>Keep track of where you've been in the world. Share your experiences with your friends.</p>
-          <p>
-            <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started &raquo;</a>
-            <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
-          </p>
+          <div class="jumbotron">
+            <h1>Show the world <br>where you've been.</h1>
+            <p>Keep track of where you've been in the world. Share your experiences with your friends. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sagittis libero non lectus adipiscing blandit.</p> <br>
+            <p>
+              <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
+              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
+            </p>
+          </div>
         </div>
 
-
-      </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -69,4 +68,13 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   </body>
+  <div class="info">
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+    <h2>Hello world</h2><br>
+  </div>
   </html>
