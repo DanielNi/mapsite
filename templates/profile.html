@@ -102,8 +102,14 @@
 		// });
 
 		var infowindow;
-		var visited = new Array();
-		var lived = new Array();
+		var visited = [];
+		var lived = [];
+		var styling = [{
+				polygonOptions: {
+					fillColor: '#FFFFFF',
+					fillOpacity: 0
+				}
+			}];
 
 		google.maps.event.addListener(layer,'click',function(e) {
 			if (typeof infowindow !== 'undefined') {
@@ -165,61 +171,62 @@
 			// 	}]
 			// });
 			// country.setMap(map);
-			if (visited.indexOf(countryName) === -1) {
-				visited.push(countryName);
-			}
-			layer.set("styles", [{
-				polygonOptions: {
-					fillColor: '#FFFFFF',
-					fillOpacity: 0
-				}
-			},	{
+			styling.push({
 				where: "name = '"+countryName+"'",
 				polygonOptions: {
 					fillColor: color, 
 					fillOpacity: 0.5, 
 				}
+			});
+
+			if (visited.indexOf(countryName) === -1) {
+				visited.push(countryName);
 			}
-			]);
+			layer.set("styles", styling);
+
+			// The problem is that each layer can only have five styles,
+			// and each map can only have five layers. There is no way to
+			// directly use FusionTables to color in all the countries
+			// unless you somehow access the data from the table directly?
+
 			google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
+				// alert(styling.toString());
 				color = this.value;
 				if (visited.indexOf(countryName) === -1) {
 					visited.push(countryName);
 				}
-				layer.set("styles", [{
-				polygonOptions: {
-					fillColor: '#FFFFFF',
-					fillOpacity: 0
-				}
-			},	{
-				where: "name = '"+countryName+"'", 
-				polygonOptions: {
-					fillColor: color, 
-					fillOpacity: 0.5, 
-				}
-			}
-			]);
+				styling.push({
+					where: "name = '"+countryName+"'", 
+					polygonOptions: {
+						fillColor: color, 
+						fillOpacity: 0.5, 
+					}
+				});
+
+				layer.set("styles", styling);
 			});
+
+
 			google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
+				// alert(styling.toString());
 				color = this.value;
 				if (lived.indexOf(countryName) === -1) {
 					lived.push(countryName);
 				}
-				layer.set("styles", [{
-				polygonOptions: {
-					fillColor: '#FFFFFF',
-					fillOpacity: 0
-				}
-			},	{
-				where: "name = '"+countryName+"'", 
-				polygonOptions: {
-					fillColor: color, 
-					fillOpacity: 0.5, 
-				}
-			}
-			]);
+				styling.push({
+					where: "name = '"+countryName+"'", 
+					polygonOptions: {
+						fillColor: color, 
+						fillOpacity: 0.5, 
+					}
+				});
+
+				layer.set("styles", styling);
 			});
+
+
 			google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
+				// alert(styling.toString());
 				color = this.value;
 				var indlive = lived.indexOf(countryName);
 				var indbeen = visited.indexOf(countryName);
@@ -229,19 +236,16 @@
 				if (indbeen > -1) {
 					visited.splice(indbeen, 1);
 				}
-				layer.set("styles", [{
-				polygonOptions: {
-					fillColor: '#FFFFFF',
-					fillOpacity: 0
-				}
-			},	{
-				where: "name = '"+countryName+"'", 
-				polygonOptions: {
-					fillColor: color, 
-					fillOpacity: 0.5, 
-				}
-			}
-			]);
+
+				styling.push({
+					where: "name = '"+countryName+"'", 
+					polygonOptions: {
+						fillColor: color, 
+						fillOpacity: 0.5, 
+					}
+				});
+
+				layer.set("styles", styling);
 			});
 		});
 		}
