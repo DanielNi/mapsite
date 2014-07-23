@@ -39,8 +39,8 @@
           <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="#main">Home</a></li>
+            <li><a href="#info">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
           {% if user.is_authenticated %}
@@ -59,11 +59,11 @@
           <div class="jumbotron"                  
           data-center="opacity: 1"
           data-top-bottom="opacity: 0" >
-            <h1>Show the world <br>where you've been.</h1>
-            <p>Keep track of where you've been in the world. Share your experiences with your friends. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sagittis libero non lectus adipiscing blandit.</p> <br>
+            <h1>Show the world <br>where you've been.</h1> <br>
+            <p id="tagline">Document and share your journeys throughout the world, with the world.</p> <br>
             <p>
               <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
-              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
+              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
             </p>
           </div>
         </div>
@@ -71,36 +71,49 @@
       </section>
 
       <section id="info">
-        <div class="container"></div>
-        <h2>HELLO THIS IS TEST TEXT.</h2>
+        <div class="bcg container">
+          <div class="infobox" id="create">
+            <img src="{% static 'map.png' %}">
+            <h3>Create your map</h3>
+            <p>Just tap a country to record where you've been. The more you've traveled, the more badges you'll earn. Bonus points for more exotic places!</p>
+          </div>
+          <div class="infobox" id="illustrate">
+            <img src="{% static 'pencil.png' %}">
+            <h3>Illustrate your adventures</h3>
+            <p>Upload photos, videos, or write a journal entry for each country you've been to. All of your memories are kept here in one convenient place.</p>
+          </div>
+          <div class="infobox" id="share">
+            <img src="{% static 'share.png' %}">
+            <h3>Share your experiences</h3>
+            <p>See where in the world your friends have traveled. Compare your adventures, recommend new destinations and show off your hidden secrets!</p>
+          </div>
+        </div>
       </section>
 
       <section id="contact">
         <div class="bcg"
-          data-600-bottom="opacity: 0;"
-          data-100-bottom="opacity: 1;">
+          data-600-bottom="background-position: 100% 100px;"
+          data-bottom="background-position: 100% 0px;">
         <div class="container">
           <div class="jumbotron"                  
               data-100-bottom="opacity: 0;"
               data-bottom="opacity: 1;" >
-            <h1>The world is waiting...<br>Get moving!</h1> <br>
+            <h1>What are you waiting for?</h1> <br>
             <p>
               <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
-              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Already have an account?</a>
+              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
             </p>
             </p>
           </div>
         </div>
-        <div class="navbar navbar-default" role="about">
+        <div class="navbar navbar-default navbar-fixed-bottom" role="about">
           <div class="container">
 
-            <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
+            <p class="navbar-left navbar-text navbar-nav">Created by Daniel Ni</p>
 
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="{% url 'homepage' %}">Home</a></li>
-              <li><a href="{% url 'about' %}">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
+            <p class="navbar-text navbar-nav navbar-right">
+              Feel free to <a href="mailto:danielni@wustl.edu">contact me via email</a>!
+            </p>
             {% if user.is_authenticated %}
             <p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
             {% endif %}
@@ -114,9 +127,13 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-              <script type="text/javascript" src="{% static 'skrollr.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'skrollr.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'skrollr.menu.min.js' %}"></script>
     <script type="text/javascript">
       var s = skrollr.init();
+      skrollr.menu.init(s, {
+        animate: true
+      });
     </script>
   </body>
   </html>

@@ -14,8 +14,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'myapp.views.index', name="homepage"),
     url(r'^home/$', 'myapp.views.index', name="home"),
-    url(r'^about/$', 'myapp.views.about', name="about"),
-
     url(r'^login/$', views.login,
                         {'template_name': 'registration/login.html'},
                            name="auth_login"),

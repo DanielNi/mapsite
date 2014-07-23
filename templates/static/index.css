@@ -17,13 +17,22 @@
 
 .jumbotron {
   margin-top: 11%;
-  background-color:rgba(255,255,255,0.7);
+  background-color:rgba(255,255,255,0);
+  text-align: center;
 }
 
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-size: 40px;
-  /*text-shadow: 2px 2px 0px white;*/
+  color: white !important;
+  text-shadow: 2px 2px 2px black;
+}
+
+#tagline {
+  color: white;
+  text-shadow: 2px 2px 0px black;
+  margin: 0 auto;
+  max-width: 70%;
 }
 
 .bcg {
@@ -37,6 +46,7 @@ h1 {
 
 .login {
   font-size: 16px;
+  color: white;
 /*  color: #484848;*/
 }
 
@@ -47,29 +57,47 @@ h1 {
 
 .btn-primary {
   font-family: 'Lato', sans-serif;
-}
-
-.info {
-  position: relative;
-  z-index: 5;
-  background-color: rgb(240, 240, 240);
-  margin-top: 16%;
-  height: 100%;
-  width: 100%;
+  background-color: rgba(255,255,255,0.2);
+  outline: none;
 }
 
 #main .bcg {
-  background-image:url('background.jpeg');
+  background-image:url('background2.jpg');
 }
 
-body {
+body, #info .bcg {
   background-color:#CCDEEA;
 }
 
 #info {
-  height:100vh;
+  height:65vh;
+  padding-top: 8%;
+  text-align: center;
+}
+
+.infobox {
+  width: 300px;
+}
+
+img {
+  height: 150px;
+  width: 150px;
+}
+
+#create {
+  display: inline-block;
+  margin-right: 8%;
+}
+
+#illustrate {
+  display: inline-block;
+}
+
+#share {
+  display: inline-block;
+  margin-left: 8%;
 }
 
 #contact .bcg {
-  background-image:url('background2.jpg');
+  background-image:url('background.jpeg');
 }
