@@ -90,36 +90,37 @@
         </div>
       </section>
 
+      <section id="example">
+        <p id="example_text">Check out an example map!</p>
+      </section>
+
       <section id="contact">
         <div class="bcg"
           data-600-bottom="background-position: 100% 100px;"
           data-bottom="background-position: 100% 0px;">
-        <div class="container">
-          <div class="jumbotron"                  
-              data-100-bottom="opacity: 0;"
-              data-bottom="opacity: 1;" >
-            <h1>What are you waiting for?</h1> <br>
-            <p>
-              <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
-              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
-            </p>
-            </p>
-          </div>
-        </div>
-        <div class="navbar navbar-default navbar-fixed-bottom" role="about">
           <div class="container">
-
-            <p class="navbar-left navbar-text navbar-nav">Created by Daniel Ni</p>
-
-            <p class="navbar-text navbar-nav navbar-right">
-              Feel free to <a href="mailto:danielni@wustl.edu">contact me via email</a>!
-            </p>
-            {% if user.is_authenticated %}
-            <p class="navbar-text navbar-right">Hello there, <a href="#" class="navbar-link">{{ user.username }}</a>!</p>
-            {% endif %}
-
+            <div class="jumbotron"                  
+                data-100-bottom="opacity: 0;"
+                data-bottom="opacity: 1;" >
+              <h1>What are you waiting for?</h1> <br>
+              <p>
+                <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
+                <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
+              </p>
+              </p>
+            </div>
           </div>
-          </div>
+          <div class="navbar navbar-default navbar-bottom" role="about">
+              <div class="container">
+
+                <p class="navbar-left navbar-text navbar-nav">Created by Daniel Ni</p>
+
+                <p class="navbar-text navbar-nav navbar-right">
+                  Feel free to <a href="mailto:danielni@wustl.edu">contact me via email</a>!
+                </p>
+
+              </div>
+            </div>
         </div>
       </section>
 

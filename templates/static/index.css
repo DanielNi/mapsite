@@ -98,6 +98,28 @@ img {
   margin-left: 8%;
 }
 
+#example {
+  height: 35vh;
+  background-color: gray;
+  font-family: 'Lato', sans-serif;
+  font-size: 50px;
+  color:white;
+  background-image: url('example.png');
+  background-size: cover;
+}
+
+#example_text {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
 #contact .bcg {
   background-image:url('background.jpeg');
+}
+
+.navbar-bottom {
+  bottom: -305px;
+  margin-bottom: -100px;
 }
