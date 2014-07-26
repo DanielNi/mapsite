@@ -2,17 +2,27 @@
   background-color: rgb(245, 245, 245);
 }
 
+#header_nav {
+  height:80px;
+}
+
 .navbar-brand {
   font-family: 'Lobster', cursive;
   float: left;
-  padding: 15px 15px;
-  font-size: 20px;
-  line-height: 24px;
+  /*padding: 15px 15px;*/
+  font-size: 35px;
+  margin-top: 15px;
+  /*line-height: 24px;*/
 }
 
 .navbar-nav {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
+}
+
+#menu {
+  font-size: 20px;
+  margin-top: 15px;
 }
 
 .jumbotron {
@@ -70,8 +80,8 @@ body, #info .bcg {
 }
 
 #info {
-  height:65vh;
-  padding-top: 8%;
+  height:55vh;
+  padding-top: 5%;
   text-align: center;
 }
 
@@ -99,13 +109,14 @@ img {
 }
 
 #example {
-  height: 35vh;
+  height: 45vh;
   background-color: gray;
   font-family: 'Lato', sans-serif;
   font-size: 50px;
   color:white;
   background-image: url('example.png');
-  background-size: cover;
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 #example_text {
@@ -113,6 +124,7 @@ img {
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
+  text-shadow: 2px 2px 2px black;
 }
 
 #contact .bcg {
