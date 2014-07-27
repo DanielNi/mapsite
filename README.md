@@ -1,5 +1,7 @@
 Travel Tracker
 =======
 
-This is a webapp built in Django that lets you create your own map displaying where you've traveled and lived in the world.
-To be continued...
+Travel Tracker is the best way to document and share your journeys throughout the world, with the world.
+
+![homepage](screenshots/homepage.png)
+![map](screenshots/map_example.png)
