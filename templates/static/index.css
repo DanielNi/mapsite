@@ -1,3 +1,36 @@
+.overlay {
+  position:fixed;
+  display:none; 
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9998;
+}
+
+iframe {
+  display: none;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  z-index: 9999;
+  border: none;
+  width: 500px;
+  margin-left: -250px;
+  border-radius: 5px;
+}
+
+#register_frame {
+  height: 500px;
+  margin-top: -250px;
+}
+
+#login_frame {
+  height: 400px;
+  margin-top: -200px;
+}
+
 .navbar-default {
   background-color: rgb(245, 245, 245);
 }
@@ -82,6 +115,7 @@ body, #info .bcg {
 #info {
   height:55vh;
   padding-top: 5%;
+  padding-bottom: 5%;
   text-align: center;
 }
 
@@ -113,7 +147,7 @@ img {
   background-color: gray;
   font-family: 'Lato', sans-serif;
   font-size: 50px;
-  color:white;
+  color:black;
   background-image: url('example.png');
   background-size: contain;
   background-attachment: fixed;
@@ -124,7 +158,7 @@ img {
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
-  text-shadow: 2px 2px 2px black;
+  text-shadow: 2px 2px 2px white;
 }
 
 #contact .bcg {

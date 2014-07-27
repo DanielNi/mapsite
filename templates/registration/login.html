@@ -14,8 +14,7 @@
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
-  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<!--   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
 
       <a class="navbar-brand" href="{% url 'homepage' %}">Travel Tracker</a>
@@ -27,7 +26,7 @@
       </ul>
 
     </div>
-  </div>
+  </div> -->
 
 <!--     <div class="container">
 
@@ -46,8 +45,7 @@
     </form>
 
   </div> -->
-
-  <form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+  <form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}" target="_parent">
     {% csrf_token %} 
     <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
 

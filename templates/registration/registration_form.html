@@ -1,10 +1,21 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+
+{% load staticfiles %}
 {% load i18n %}
 
-{% block content %}
+<html>
+<head>
+  <title>Travel Tracker</title>
+  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'register.css' %}"/>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
 <div class="container">
 
-    <form class="form-register" role="form" method="post" action=".">
+    <form class="form-register" role="form" method="post" action="." target="_parent">
         {% csrf_token %}
         <h1 class="form-register-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h1>
         <!-- <h3 class="tagline"> Show the world where you've been. </h3> -->
@@ -41,6 +52,6 @@
     <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3>
 
 </div>
+</body>
 
-
-{% endblock %}
+</html>

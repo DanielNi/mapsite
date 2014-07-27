@@ -42,3 +42,31 @@ $(window).scroll(function(){
 		}  
 	}
 });
+
+var showing_login = false;
+var showing_register = false;
+
+$('.overlay').on('click', function() {
+	if ($('#login_frame').is(":visible")) {
+		$('#login_frame').fadeOut();
+		$('.overlay').fadeOut();
+	}
+	if ($('#register_frame').is(':visible')) {
+		$('#register_frame').fadeOut();
+		$('.overlay').fadeOut();
+	}
+});
+
+$('.login').on('click', function() {
+	if (!$('#login_frame').is(':visible')) {
+		$('#login_frame').fadeIn();
+		$('.overlay').fadeIn();
+	}
+});
+
+$('.btn-primary').on('click', function() {
+	if (!$('#register_frame').is(':visible')) {
+		$('#register_frame').fadeIn();
+		$('.overlay').fadeIn();
+	}
+})

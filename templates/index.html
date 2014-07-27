@@ -29,10 +29,11 @@
       <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
       <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
 
-    </head>
-
-    <body>
-
+</head>
+<body>
+     <div class="overlay"></div>
+     <iframe src="{% url 'registration_register' %}" id="register_frame" name="register_frame"></iframe>
+     <iframe src="{% url 'auth_login' %}" id="login_frame" name="login_frame"></iframe>
       <div class="navbar navbar-default navbar-fixed-top" id="header_nav" role="navigation">
         <div class="container">
 
@@ -62,8 +63,8 @@
             <h1>Show the world <br>where you've been.</h1> <br>
             <p id="tagline">Document and share your journeys throughout the world, with the world.</p> <br>
             <p>
-              <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
-              <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
+              <a class="btn btn-lg btn-primary" role="button" target="register_frame">Get Started</a>
+              <a class="login" href="javascript:void(0);" target="login_frame">&nbsp;&nbsp;&nbsp;Log in</a>
             </p>
           </div>
         </div>
@@ -104,8 +105,8 @@
                 data-bottom="opacity: 1;" >
               <h1>What are you waiting for?</h1> <br>
               <p>
-                <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Get Started</a>
-                <a class="login" href="{% url 'auth_login' %}">&nbsp;&nbsp;&nbsp;Log in</a>
+                <a class="btn btn-lg btn-primary" role="button" target="register_frame">Get Started</a>
+                <a class="login" href="javascript:void(0);" target="login_frame">&nbsp;&nbsp;&nbsp;Log in</a>
               </p>
               </p>
             </div>
