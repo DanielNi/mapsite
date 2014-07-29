@@ -53,14 +53,6 @@ body {
   font-size: 56px;
   text-shadow: 2px 2px 0px white;
 }
-.form-register-heading a {
-  color: black;
-}
-.form-register-heading a:hover {
-  color: #ffffff;
-  text-decoration: none;
-  text-shadow: none;
-}
 .form-register .checkbox {
   margin-bottom: 10px;
   font-family: 'Lato', sans-serif;

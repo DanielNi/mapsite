@@ -69,17 +69,12 @@
 		var map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
 
-
-		// FUSION TABLES STUFF
-		// ========================================================================
-		//
-		//
-		//
+		var tableID = '1uKyspg-HkChMIntZ0N376lMpRzduIjr85UYPpQ';
 
 		var layer = new google.maps.FusionTablesLayer({
 			query: {
 				select: 'kml_4326',
-				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
+				from: tableID,
 				// where: "name = '"+countryName+"'"
 			},
 			styles: [{

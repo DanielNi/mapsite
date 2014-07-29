@@ -1,5 +1,3 @@
-$(document).load().scrollTop(0);
-
 $(function(){
 	$('#header_nav').data('size','big');
 });

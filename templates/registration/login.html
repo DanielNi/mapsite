@@ -47,7 +47,7 @@
   </div> -->
   <form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}" target="_parent">
     {% csrf_token %} 
-    <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
+    <h2 class="form-signin-heading">Travel Tracker</h2>
 
     <input id="id_username" type="text" name="username" maxlength="30" class="form-control" placeholder="Username" required autofocus>
 

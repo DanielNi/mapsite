@@ -32,7 +32,7 @@ iframe {
 }
 
 .navbar-default {
-  background-color: rgb(245, 245, 245);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 #header_nav {
@@ -161,11 +161,19 @@ img {
   text-shadow: 2px 2px 2px white;
 }
 
-#contact .bcg {
+#redux {
+  height: 90vh;
+}
+
+#redux .bcg {
   background-image:url('background.jpeg');
 }
 
-.navbar-bottom {
-  bottom: -305px;
-  margin-bottom: -100px;
+#contact {
+  font-family: 'Lato', sans-serif;
+  height: 10vh;
+  text-align: center;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding-top: 15px;
 }
