@@ -76,12 +76,28 @@
 		//
 		//
 
-		var layer = new google.maps.FusionTablesLayer({
+		var beenLayer = new google.maps.FusionTablesLayer({
 			query: {
 				select: 'kml_4326',
 				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
-				// where: "name = '"+countryName+"'"
+				where: 'been = 1'
 			},
+			map: map,
+			styles: [{
+				polygonOptions: {
+					fillColor: "#003399",
+					fillOpacity: 0
+				}
+			}]
+		});
+
+		var baseLayer = new google.maps.FusionTablesLayer({
+			query: {
+				select: 'kml_4326',
+				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
+				// where: 'been = 1'
+			},
+			map: map,
 			styles: [{
 				polygonOptions: {
 					fillColor: "#FFFFFF",
@@ -89,7 +105,6 @@
 				}
 			}]
 		});
-		layer.setMap(map);
 
 		// var infobox = new InfoBox({
 		// 	content: document.getElementById("infobox"),
@@ -116,143 +131,143 @@
 				}
 			}];
 
-		google.maps.event.addListener(layer,'click',function(e) {
-			if (typeof infowindow !== 'undefined') {
-				infowindow.close();
-			}
-			var color = '#003399'
-			infowindow = new google.maps.InfoWindow();
-			var countryName = e.row['name'].value;
-			// var contentString = document.getElementById("infowindow");
-			var contentString =
-			'<div id="content">'+
-			'<h3 class="firstHeading">'+countryName+'</h3>'+
-			'<div id="bodyContent">'+
-			"<label class='choice' for='live'>"+
-			"<input id='live' type='radio' name='choice' value='#008C00' />"+
-			"<a class='Live'>◼ I've lived here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='been'>"+
-			"<input id='been' type='radio' name='choice' value='#003399' />"+
-			"<a class='Been'>◼ I've been here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='cancel'>"+
-			"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
-			"<a class='Cancel'>◻ Cancel</a>"+
-			"</label>"+
-			'</div>'+
-			"</div>";
+		// google.maps.event.addListener(layer,'click',function(e) {
+		// 	if (typeof infowindow !== 'undefined') {
+		// 		infowindow.close();
+		// 	}
+		// 	var color = '#003399'
+		// 	infowindow = new google.maps.InfoWindow();
+		// 	var countryName = e.row['name'].value;
+		// 	// var contentString = document.getElementById("infowindow");
+		// 	var contentString =
+		// 	'<div id="content">'+
+		// 	'<h3 class="firstHeading">'+countryName+'</h3>'+
+		// 	'<div id="bodyContent">'+
+		// 	"<label class='choice' for='live'>"+
+		// 	"<input id='live' type='radio' name='choice' value='#008C00' />"+
+		// 	"<a class='Live'>◼ I've lived here.</a>"+
+		// 	"</label><br>"+
+		// 	"<label class='choice' for='been'>"+
+		// 	"<input id='been' type='radio' name='choice' value='#003399' />"+
+		// 	"<a class='Been'>◼ I've been here.</a>"+
+		// 	"</label><br>"+
+		// 	"<label class='choice' for='cancel'>"+
+		// 	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+		// 	"<a class='Cancel'>◻ Cancel</a>"+
+		// 	"</label>"+
+		// 	'</div>'+
+		// 	"</div>";
 
-			// var geocoder = new google.maps.Geocoder();
-		 //    geocoder.geocode( { 'address': countryName}, function(results, status) {
-		 //    	var swlat = results[0].geometry.viewport.getSouthWest().lat();
-		 //    	var swlng = results[0].geometry.viewport.getSouthWest().lng();
-		 //    	var nelat = results[0].geometry.viewport.getNorthEast().lat();
-		 //    	var nelng = results[0].geometry.viewport.getNorthEast().lng();
-		 //      if (status == google.maps.GeocoderStatus.OK) {
-		 //        map.setCenter(results[0].geometry.location);
-		 //        map.fitBounds(results[0].geometry.viewport);
-		 //      }
-		 //    });
+		// 	// var geocoder = new google.maps.Geocoder();
+		//  //    geocoder.geocode( { 'address': countryName}, function(results, status) {
+		//  //    	var swlat = results[0].geometry.viewport.getSouthWest().lat();
+		//  //    	var swlng = results[0].geometry.viewport.getSouthWest().lng();
+		//  //    	var nelat = results[0].geometry.viewport.getNorthEast().lat();
+		//  //    	var nelng = results[0].geometry.viewport.getNorthEast().lng();
+		//  //      if (status == google.maps.GeocoderStatus.OK) {
+		//  //        map.setCenter(results[0].geometry.location);
+		//  //        map.fitBounds(results[0].geometry.viewport);
+		//  //      }
+		//  //    });
 
-			infowindow.setContent(contentString);
-			infowindow.setPosition(new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()));
-			map.setCenter(infowindow.getPosition());
-			if (map.getZoom() < 4) {
-				map.setZoom(4);
-			}
-			infowindow.open(map);
-			// var country = new google.maps.FusionTablesLayer({
-			// 	query: {
-			// 		select: 'kml_4326',
-			// 		from: tableID,
-			// 		where: "name = '"+countryName+"'"
-			// 	},
-			// 	styles: [{
-			// 		polygonOptions: {
-			// 			fillColor: color,
-			// 			fillOpacity: 0.5
-			// 		}
-			// 	}]
-			// });
-			// country.setMap(map);
-			styling.push({
-				where: "name = '"+countryName+"'",
-				polygonOptions: {
-					fillColor: color, 
-					fillOpacity: 0.5, 
-				}
-			});
+		// 	infowindow.setContent(contentString);
+		// 	infowindow.setPosition(new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()));
+		// 	map.setCenter(infowindow.getPosition());
+		// 	if (map.getZoom() < 4) {
+		// 		map.setZoom(4);
+		// 	}
+		// 	infowindow.open(map);
+		// 	// var country = new google.maps.FusionTablesLayer({
+		// 	// 	query: {
+		// 	// 		select: 'kml_4326',
+		// 	// 		from: tableID,
+		// 	// 		where: "name = '"+countryName+"'"
+		// 	// 	},
+		// 	// 	styles: [{
+		// 	// 		polygonOptions: {
+		// 	// 			fillColor: color,
+		// 	// 			fillOpacity: 0.5
+		// 	// 		}
+		// 	// 	}]
+		// 	// });
+		// 	// country.setMap(map);
+		// 	styling.push({
+		// 		where: "name = '"+countryName+"'",
+		// 		polygonOptions: {
+		// 			fillColor: color, 
+		// 			fillOpacity: 0.5, 
+		// 		}
+		// 	});
 
-			if (visited.indexOf(countryName) === -1) {
-				visited.push(countryName);
-			}
-			layer.set("styles", styling);
+		// 	if (visited.indexOf(countryName) === -1) {
+		// 		visited.push(countryName);
+		// 	}
+		// 	layer.set("styles", styling);
 
-			// The problem is that each layer can only have five styles,
-			// and each map can only have five layers. There is no way to
-			// directly use FusionTables to color in all the countries
-			// unless you somehow access the data from the table directly?
+		// 	// The problem is that each layer can only have five styles,
+		// 	// and each map can only have five layers. There is no way to
+		// 	// directly use FusionTables to color in all the countries
+		// 	// unless you somehow access the data from the table directly?
 
-			google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
-				// alert(styling.toString());
-				color = this.value;
-				if (visited.indexOf(countryName) === -1) {
-					visited.push(countryName);
-				}
-				styling.push({
-					where: "name = '"+countryName+"'", 
-					polygonOptions: {
-						fillColor: color, 
-						fillOpacity: 0.5, 
-					}
-				});
+		// 	google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
+		// 		// alert(styling.toString());
+		// 		color = this.value;
+		// 		if (visited.indexOf(countryName) === -1) {
+		// 			visited.push(countryName);
+		// 		}
+		// 		styling.push({
+		// 			where: "name = '"+countryName+"'", 
+		// 			polygonOptions: {
+		// 				fillColor: color, 
+		// 				fillOpacity: 0.5, 
+		// 			}
+		// 		});
 
-				layer.set("styles", styling);
-			});
-
-
-			google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
-				// alert(styling.toString());
-				color = this.value;
-				if (lived.indexOf(countryName) === -1) {
-					lived.push(countryName);
-				}
-				styling.push({
-					where: "name = '"+countryName+"'", 
-					polygonOptions: {
-						fillColor: color, 
-						fillOpacity: 0.5, 
-					}
-				});
-
-				layer.set("styles", styling);
-			});
+		// 		layer.set("styles", styling);
+		// 	});
 
 
-			google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
-				// alert(styling.toString());
-				color = this.value;
-				var indlive = lived.indexOf(countryName);
-				var indbeen = visited.indexOf(countryName);
-				if (indlive > -1) {
-					lived.splice(indlive, 1);
-				}
-				if (indbeen > -1) {
-					visited.splice(indbeen, 1);
-				}
+		// 	google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
+		// 		// alert(styling.toString());
+		// 		color = this.value;
+		// 		if (lived.indexOf(countryName) === -1) {
+		// 			lived.push(countryName);
+		// 		}
+		// 		styling.push({
+		// 			where: "name = '"+countryName+"'", 
+		// 			polygonOptions: {
+		// 				fillColor: color, 
+		// 				fillOpacity: 0.5, 
+		// 			}
+		// 		});
 
-				styling.push({
-					where: "name = '"+countryName+"'", 
-					polygonOptions: {
-						fillColor: color, 
-						fillOpacity: 0.5, 
-					}
-				});
+		// 		layer.set("styles", styling);
+		// 	});
 
-				layer.set("styles", styling);
-			});
-		});
+
+		// 	google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
+		// 		// alert(styling.toString());
+		// 		color = this.value;
+		// 		var indlive = lived.indexOf(countryName);
+		// 		var indbeen = visited.indexOf(countryName);
+		// 		if (indlive > -1) {
+		// 			lived.splice(indlive, 1);
+		// 		}
+		// 		if (indbeen > -1) {
+		// 			visited.splice(indbeen, 1);
+		// 		}
+
+		// 		styling.push({
+		// 			where: "name = '"+countryName+"'", 
+		// 			polygonOptions: {
+		// 				fillColor: color, 
+		// 				fillOpacity: 0.5, 
+		// 			}
+		// 		});
+
+		// 		layer.set("styles", styling);
+		// 	});
+		// });
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 
