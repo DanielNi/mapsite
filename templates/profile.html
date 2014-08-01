@@ -80,13 +80,20 @@
 			query: {
 				select: 'kml_4326',
 				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
-				where: 'been = 1'
+				where: 'status > 0'
 			},
 			map: map,
 			styles: [{
+				where: 'been = 1',
 				polygonOptions: {
 					fillColor: "#003399",
-					fillOpacity: 0
+					// fillOpacity: 0
+				}
+			}, {
+				where: 'live = 1',
+				polygonOptions: {
+					fillColor: "#008C00",
+					// fillOpacity: 0
 				}
 			}]
 		});
@@ -94,16 +101,13 @@
 		var baseLayer = new google.maps.FusionTablesLayer({
 			query: {
 				select: 'kml_4326',
-				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
-				// where: 'been = 1'
+				from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf'
 			},
 			map: map,
-			styles: [{
-				polygonOptions: {
-					fillColor: "#FFFFFF",
-					fillOpacity: 0
-				}
-			}]
+			options: {
+				styleId: 2,
+				templateId: 2
+			}
 		});
 
 		// var infobox = new InfoBox({
