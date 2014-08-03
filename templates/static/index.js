@@ -31,15 +31,15 @@ var index = (function($) {
 					elements.header_nav.data('size','small');
 					elements.header_nav.stop().animate({
 						height:'50px'
-					},600);
+					},400);
 					elements.navbar_brand.stop().animate({
 						fontSize:'20px',
 						marginTop:'0px'
-					},600);
+					},400);
 					elements.menu.stop().animate({
 						fontSize:'14px',
 						marginTop:'0px'
-					},600);
+					},400);
 				}
 			}
 			else
@@ -49,15 +49,15 @@ var index = (function($) {
 					elements.header_nav.data('size','big');
 					elements.header_nav.stop().animate({
 						height:'80px'
-					},600);
+					},400);
 					elements.navbar_brand.stop().animate({
 						fontSize:'35px',
 						marginTop:'15px'
-					},600);
+					},400);
 					elements.menu.stop().animate({
 						fontSize:'20px',
 						marginTop:'15px'
-					},600);
+					},400);
 				}  
 			}
 		},
