@@ -70,53 +70,17 @@
 			mapOptions);
 
 
-		// FUSION TABLES STUFF
+		// DATA LAYERS STUFF
 		// ========================================================================
 		//
 		//
 		//
 
-		// var activeLayer = new google.maps.FusionTablesLayer({
-		// 	query: {
-		// 		select: 'kml_4326',
-		// 		from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf',
-		// 		where: 'status > 0'
-		// 	},
-		// 	map: map,
-		// 	styles: [{
-		// 		where: 'been = 1',
-		// 		polygonOptions: {
-		// 			fillColor: "#003399",
-		// 			// fillOpacity: 0
-		// 		}
-		// 	}, {
-		// 		where: 'live = 1',
-		// 		polygonOptions: {
-		// 			fillColor: "#008C00",
-		// 			// fillOpacity: 0
-		// 		}
-		// 	}]
-		// });
-
-		// var baseLayer = new google.maps.FusionTablesLayer({
-		// 	query: {
-		// 		select: 'kml_4326',
-		// 		from: '1BzE3vxOmw7P8b9JosdAWpn_MPRv8K-Ka5ULLezAf'
-		// 	},
-		// 	map: map,
-		// 	options: {
-		// 		styleId: 2,
-		// 		templateId: 2
-		// 	}
-		// });
-
 		map.data.loadGeoJson('{% static "countries-hires.json" %}');
-		// var mainStyle = {
-		// 	fillColor: 'white',
-		// 	fillOpacity: 0,
-		// 	strokeWeight: 1
-		// };
-		// map.data.setStyle(mainStyle);
+
+		var infowindow;
+		var been = new Array();
+		var lived = new Array();
 
 		map.data.setStyle(function(feature) {
 			var color = 'white';
@@ -136,7 +100,86 @@
 		});
 
 		map.data.addListener('click', function(event) {
-			event.feature.setProperty('been', true);
+			var countryName = event.feature.getProperty('NAME');
+			if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
+				event.feature.setProperty('been', true);
+				been.push(countryName);
+			}
+			console.log("been: " + been);
+			console.log("lived: " + lived);
+			if (typeof infowindow !== 'undefined') {
+				infowindow.close();
+			}
+			var contentString =
+				'<div id="content">'+
+				'<h3 class="firstHeading">'+countryName+'</h3>'+
+				'<div id="bodyContent">'+
+				"<label class='choice' for='live'>"+
+				"<input id='live' type='radio' name='choice' value='#008C00' />"+
+				"<a class='Live'>◼ I've lived here.</a>"+
+				"</label><br>"+
+				"<label class='choice' for='been'>"+
+				"<input id='been' type='radio' name='choice' value='#003399' />"+
+				"<a class='Been'>◼ I've been here.</a>"+
+				"</label><br>"+
+				"<label class='choice' for='cancel'>"+
+				"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+				"<a class='Cancel'>◻ Cancel</a>"+
+				"</label>"+
+				'</div>'+
+				"</div>";
+			infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+			});
+			map.panTo(infowindow.getPosition());
+			if (map.getZoom() < 4) {
+				map.setZoom(4);
+			}
+			infowindow.open(map);
+
+			google.maps.event.addListener(infowindow, 'domready', function() {
+				document.getElementById('been').addEventListener('click', function(e) {
+					var indlive = lived.indexOf(countryName);
+					if (indlive > -1) {
+						lived.splice(indlive, 1);
+					}
+					if (been.indexOf(countryName) === -1) {
+						been.push(countryName);
+					}
+					event.feature.setProperty('lived', false);
+					event.feature.setProperty('been', true);
+					console.log("been: " + been);
+					console.log("lived: " + lived);
+				});
+				document.getElementById('live').addEventListener('click', function(e) {
+					var indbeen = been.indexOf(countryName);
+					if (indbeen > -1) {
+						been.splice(indbeen, 1);
+					}
+					if (lived.indexOf(countryName) === -1) {
+						lived.push(countryName);
+					}
+					event.feature.setProperty('been', false);
+					event.feature.setProperty('lived', true);
+					console.log("been: " + been);
+					console.log("lived: " + lived);
+				});
+				document.getElementById('cancel').addEventListener('click', function(e) {
+					var indlive = lived.indexOf(countryName);
+					var indbeen = been.indexOf(countryName);
+					if (indlive > -1) {
+						lived.splice(indlive, 1);
+					}
+					if (indbeen > -1) {
+						been.splice(indbeen, 1);
+					}
+					event.feature.setProperty('been', false);
+					event.feature.setProperty('lived', false);
+					console.log("been: " + been);
+					console.log("lived: " + lived);
+				});
+			});
 		});
 
 		map.data.addListener('mouseover', function(event) {
@@ -148,178 +191,9 @@
 			map.data.revertStyle();
 		});
 
-		var infowindow;
-		var been = new Array();
-		var lived = new Array();
-		map.data.addListener('click', function(event) {
-			if (typeof infowindow !== 'undefined') {
-				infowindow.close();
-			}
-			infowindow = new google.maps.InfoWindow();
-			var countryName = event.feature.getProperty('NAME');
-			var contentString =
-			'<div id="content">'+
-			'<h3 class="firstHeading">'+countryName+'</h3>'+
-			'<div id="bodyContent">'+
-			"<label class='choice' for='live'>"+
-			"<input id='live' type='radio' name='choice' value='#008C00' />"+
-			"<a class='Live'>◼ I've lived here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='been'>"+
-			"<input id='been' type='radio' name='choice' value='#003399' />"+
-			"<a class='Been'>◼ I've been here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='cancel'>"+
-			"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
-			"<a class='Cancel'>◻ Cancel</a>"+
-			"</label>"+
-			'</div>'+
-			"</div>";
-			infowindow.setContent(contentString);
-			infowindow.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
-			map.setCenter(infowindow.getPosition());
-			if (map.getZoom() < 4) {
-				map.setZoom(4);
-			}
-			infowindow.open(map);
-
-			google.maps.event.addDomListener(document.getElementById('been'), 'click', function() {
-				color = this.value;
-				if (visited.indexOf(countryName) === -1) {
-					visited.push(countryName);
-				}
-				// map.data.revertStyle();
-				event.feature.setProperty('been', true);
-			});
-
-
-			google.maps.event.addDomListener(document.getElementById('live'), 'click', function() {
-				color = this.value;
-				if (lived.indexOf(countryName) === -1) {
-					lived.push(countryName);
-				}
-				// map.data.revertStyle();
-				event.feature.setProperty('lived', true);
-			});
-
-
-			google.maps.event.addDomListener(document.getElementById('cancel'), 'click', function() {
-				color = this.value;
-				var indlive = lived.indexOf(countryName);
-				var indbeen = visited.indexOf(countryName);
-				if (indlive > -1) {
-					lived.splice(indlive, 1);
-				}
-				if (indbeen > -1) {
-					visited.splice(indbeen, 1);
-				}
-				// map.data.revertStyle();
-				event.feature.setProperty('been', false);
-				event.feature.setProperty('lived', false);
-
-			});
-		});
-
-		// var infobox = new InfoBox({
-		// 	content: document.getElementById("infobox"),
-		// 	disableAutoPan: false,
-		// 	maxWidth: 0,
-		// 	pixelOffset: new google.maps.Size(-140, 0),
-		// 	boxStyle: {
-		// 		background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
-		// 		opacity: 0.75,
-		// 		width: "280px"
-		// 	},
-		// 	closeBoxMargin: "12px 4px 2px 2px",
-		// 	closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
-		// 	infoBoxClearance: new google.maps.Size(1, 1)
-		// });
-
-		// var infowindow;
-		// var visited = [];
-		// var lived = [];
-
-		// google.maps.event.addListener(baselayer,'click',function(e) {
-		// 	if (typeof infowindow !== 'undefined') {
-		// 		infowindow.close();
-		// 	}
-		// 	var color = '#003399'
-		// 	infowindow = new google.maps.InfoWindow();
-		// 	var countryName = e.row['name'].value;
-		// 	// var contentString = document.getElementById("infowindow");
-		// 	var contentString =
-		// 	'<div id="content">'+
-		// 	'<h3 class="firstHeading">'+countryName+'</h3>'+
-		// 	'<div id="bodyContent">'+
-		// 	"<label class='choice' for='live'>"+
-		// 	"<input id='live' type='radio' name='choice' value='#008C00' />"+
-		// 	"<a class='Live'>◼ I've lived here.</a>"+
-		// 	"</label><br>"+
-		// 	"<label class='choice' for='been'>"+
-		// 	"<input id='been' type='radio' name='choice' value='#003399' />"+
-		// 	"<a class='Been'>◼ I've been here.</a>"+
-		// 	"</label><br>"+
-		// 	"<label class='choice' for='cancel'>"+
-		// 	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
-		// 	"<a class='Cancel'>◻ Cancel</a>"+
-		// 	"</label>"+
-		// 	'</div>'+
-		// 	"</div>";
-
-		// 	// var geocoder = new google.maps.Geocoder();
-		//  //    geocoder.geocode( { 'address': countryName}, function(results, status) {
-		//  //    	var swlat = results[0].geometry.viewport.getSouthWest().lat();
-		//  //    	var swlng = results[0].geometry.viewport.getSouthWest().lng();
-		//  //    	var nelat = results[0].geometry.viewport.getNorthEast().lat();
-		//  //    	var nelng = results[0].geometry.viewport.getNorthEast().lng();
-		//  //      if (status == google.maps.GeocoderStatus.OK) {
-		//  //        map.setCenter(results[0].geometry.location);
-		//  //        map.fitBounds(results[0].geometry.viewport);
-		//  //      }
-		//  //    });
-
-		// 	infowindow.setContent(contentString);
-		// 	infowindow.setPosition(new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()));
-		// 	map.setCenter(infowindow.getPosition());
-		// 	if (map.getZoom() < 4) {
-		// 		map.setZoom(4);
-		// 	}
-		// 	infowindow.open(map);
-		// 	// var country = new google.maps.FusionTablesLayer({
-		// 	// 	query: {
-		// 	// 		select: 'kml_4326',
-		// 	// 		from: tableID,
-		// 	// 		where: "name = '"+countryName+"'"
-		// 	// 	},
-		// 	// 	styles: [{
-		// 	// 		polygonOptions: {
-		// 	// 			fillColor: color,
-		// 	// 			fillOpacity: 0.5
-		// 	// 		}
-		// 	// 	}]
-		// 	// });
-		// 	// country.setMap(map);
-		// 	styling.push({
-		// 		where: "name = '"+countryName+"'",
-		// 		polygonOptions: {
-		// 			fillColor: color, 
-		// 			fillOpacity: 0.5, 
-		// 		}
-		// 	});
-
-		// 	if (visited.indexOf(countryName) === -1) {
-		// 		visited.push(countryName);
-		// 	}
-		// 	layer.set("styles", styling);
-
-			// The problem is that each layer can only have five styles,
-			// and each map can only have five layers. There is no way to
-			// directly use FusionTables to color in all the countries
-			// unless you somehow access the data from the table directly?
-
-		// });
-		}
-		google.maps.event.addDomListener(window, 'load', initialize);
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 </head>
