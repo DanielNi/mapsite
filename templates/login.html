@@ -4,7 +4,7 @@
 
 <html>
 <head>
-  <title>Travel Tracker</title>
+  <title>Atlas</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
       <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}"/>
@@ -23,7 +23,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Travel Tracker</a>
+          <a class="navbar-brand" href="#">Atlas</a>
         </div>
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
@@ -43,7 +43,7 @@
 
     <form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
     {% csrf_token %}
-    <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Travel Tracker</a></h2>
+    <h2 class="form-signin-heading"><a href="{% url 'homepage' %}">Atlas</a></h2>
     <h3 class="tagline"> Show the world where you've been. </h3>
         <input type="text" class="form-control" placeholder="Email" required autofocus>
         <input type="password" class="form-control" placeholder="Password" required>

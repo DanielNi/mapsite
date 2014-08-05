@@ -5,18 +5,13 @@
 
 <html>
 <head>
-	<title>Travel Tracker</title>
+	<title>Atlas</title>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}"/>
 
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<style type="text/css">
-	html { height: 100% }
-	body { height: 100%; margin: 0; padding: 0 }
-	#map-canvas { height: 100% }
-	</style>
 	<script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true">
 	</script>
@@ -191,6 +186,13 @@
 			map.data.revertStyle();
 		});
 
+		var input = document.getElementById('search');
+		var options = {
+			types: ['(regions)']
+		};
+		map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(input);
+		// var searchBox = new google.maps.places.SearchBox(
+		// 	/** @type {HTMLInputElement} */(input));
 	}
 	
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -202,7 +204,7 @@
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 
-			<a class="navbar-brand" href="{% url 'home' %}">Travel Tracker</a>
+			<a class="navbar-brand" href="{% url 'home' %}">Atlas</a>
 
 			{% if user.is_authenticated %}
 			<p class="navbar-text navbar-right">Hello there, <a href="{% url 'profile' %}" class="navbar-link">{{ user.username }}</a>!&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="{% url 'auth_logout' %}" class="navbar-link">Log out</a></p>
@@ -211,14 +213,15 @@
 		</div>
 	</div>
 
-<!-- 	<div class="infobox-wrapper">
-		<div id="infobox">
-			The contents of your info box. It's very easy to create and customize.
-		</div>
+	<!-- <div class="spinner">
+		<div class="rect1"></div>
+		<div class="rect2"></div>
+		<div class="rect3"></div>
+		<div class="rect4"></div>
+		<div class="rect5"></div>
 	</div> -->
-<!-- 	<div id="infowindow">
-		TESTIFJASDOFJSDOIJSOD
-	</div> -->
+
+	<input id="search" class="controls" type="text" placeholder="Search for a place">
 
 	<div id="map-canvas"/>
 </body>

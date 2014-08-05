@@ -99,12 +99,15 @@ h1 {
 }
 
 .btn-primary {
+  background-color: #003399;
+  border-color: #003399;
   font-family: 'Lato', sans-serif;
 }
 
 .btn-primary:hover {
   font-family: 'Lato', sans-serif;
   background-color: rgba(255,255,255,0.2);
+  border-color: #003399;
   outline: none;
 }
 
