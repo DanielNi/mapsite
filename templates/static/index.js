@@ -33,7 +33,7 @@ var index = (function($) {
 						height:'50px'
 					},400);
 					elements.navbar_brand.stop().animate({
-						fontSize:'20px',
+						fontSize:'25px',
 						marginTop:'0px'
 					},400);
 					elements.menu.stop().animate({
@@ -51,7 +51,7 @@ var index = (function($) {
 						height:'80px'
 					},400);
 					elements.navbar_brand.stop().animate({
-						fontSize:'35px',
+						fontSize:'40px',
 						marginTop:'15px'
 					},400);
 					elements.menu.stop().animate({

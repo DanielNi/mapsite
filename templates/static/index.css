@@ -43,7 +43,7 @@ iframe {
   font-family: 'Lobster', cursive;
   float: left;
   /*padding: 15px 15px;*/
-  font-size: 35px;
+  font-size: 40px;
   margin-top: 15px;
   /*line-height: 24px;*/
 }
@@ -95,7 +95,7 @@ h1 {
 
 .login:hover {
   text-decoration: none;
-/*  color: black;*/
+  color: #003399;
 }
 
 .btn-primary {
@@ -150,7 +150,7 @@ img {
 }
 
 #example {
-  height: 45vh;
+  height: 75vh;
   background-color: gray;
   font-family: 'Lato', sans-serif;
   font-size: 50px;
