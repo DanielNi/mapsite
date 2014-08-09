@@ -4,7 +4,23 @@
 // 		map.addLayer('layer_0');
 // 	});
 // });
+function update(location, lived) {
+	$.ajax({
+		url			: '',
+		type 		: 'POST',
+		dataType	: 'JSON',
+		data 		: {
+			'location' : location,
+			'lived'    : lived
+		},
+		success 	: function(response) {
 
+		},
+		error 		: function(response) {
+			
+		}
+	});
+}
 
 function initialize() {
 	var styles = [
@@ -60,26 +76,30 @@ function initialize() {
 	//
 	//
 
-	map.data.loadGeoJson("/static/countries-hires.json");
+	map.data.loadGeoJson("/static/countries-hires.json", {idPropertyName: 'NAME'});
 
 	var locations = $("#map-canvas").data("locations");
 	var visits = $("#map-canvas").data("visits");
 	var infowindow;
 	var been = new Array();
 	var lived = new Array();
-	for (var i = 0; i < visits.length; i++) {
-		if (visits[i]['fields']['lived']) {
-			been.push(locations[i]['fields']['name']);
 
-		} else {
-			lived.push(locations[i]['fields']['name']);
+	map.data.addListener('addfeature', function(event) {
+		if (event.feature.getId() === "Zimbabwe") { // only prepopulate after every country has been added
+			for (var i = 0; i < visits.length; i++) {
+				var name = locations[i]['fields']['name'];
+				var feature = map.data.getFeatureById(name);
+				if (visits[i]['fields']['lived']) {
+					been.push(name);
+					feature.setProperty('been', true);
+				} else {
+					lived.push(name);
+					feature.setProperty('lived', true);
+				}
+			}
+			// also get rid of loading animation here
 		}
-	}
-
-	console.log(been);
-	console.log(lived);
-	// need to figure out a way to get the appropriate feature and set their properties when i only have the names of the countries...
-	// seems like the only way to get a feature is getFeatureById
+	});
 
 	map.data.setStyle(function(feature) {
 		var color = 'white';
@@ -146,8 +166,6 @@ function initialize() {
 				}
 				event.feature.setProperty('lived', false);
 				event.feature.setProperty('been', true);
-				console.log("been: " + been);
-				console.log("lived: " + lived);
 			});
 			document.getElementById('live').addEventListener('click', function(e) {
 				var indbeen = been.indexOf(countryName);
@@ -159,8 +177,6 @@ function initialize() {
 				}
 				event.feature.setProperty('been', false);
 				event.feature.setProperty('lived', true);
-				console.log("been: " + been);
-				console.log("lived: " + lived);
 			});
 			document.getElementById('cancel').addEventListener('click', function(e) {
 				var indlive = lived.indexOf(countryName);
@@ -173,8 +189,6 @@ function initialize() {
 				}
 				event.feature.setProperty('been', false);
 				event.feature.setProperty('lived', false);
-				console.log("been: " + been);
-				console.log("lived: " + lived);
 			});
 		});
 	});
@@ -194,7 +208,7 @@ function initialize() {
 	};
 	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(input);
 	// var searchBox = new google.maps.places.SearchBox(
-	// 	/** @type {HTMLInputElement} */(input));
+		// /** @type {HTMLInputElement} */(input));
 }
 	
 google.maps.event.addDomListener(window, 'load', initialize);

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.core import serializers
 from profiles.models import Location, VisitType
-from itertools import chain
 
 def profile(request):
 	profile = request.user.get_profile()
