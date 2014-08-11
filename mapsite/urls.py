@@ -1,11 +1,9 @@
 from django.conf.urls import patterns, include, url
-
+from django.contrib import admin
 from django.contrib.auth import views
 from django.contrib.auth.decorators import user_passes_test
 
-from django.contrib import admin
 admin.autodiscover()
-
 login_forbidden = user_passes_test(lambda u: u.is_anonymous(), 'profile')
 
 urlpatterns = patterns('',
@@ -15,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', 'myapp.views.index', name="homepage"),
     url(r'^home/$', 'myapp.views.index', name="home"),
     url(r'^login/$', views.login,
-                        {'template_name': 'registration/login.html'},
+                        {'template_name': 'login.html'},
                            name="auth_login"),
     url(r'^logout/$', views.logout,
                         {'next_page': 'homepage'},
@@ -30,6 +28,5 @@ urlpatterns = patterns('',
 
     url(r'^users/profile', 'registration.views.profile', name="profile"),
     url(r'^users/', 'profiles.views.profile'),
-
 
 )

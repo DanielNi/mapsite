@@ -18,7 +18,7 @@ class UserProfile(models.Model):
 class VisitType(models.Model):
 	user_profile = models.ForeignKey(UserProfile)
 	location = models.ForeignKey(Location)
-	date_visited = models.DateField()
+	date_visited = models.DateField(auto_now=True)
 	lived = models.BooleanField(default=False)
 
 def create_user_profile(sender, instance, created, **kwargs):

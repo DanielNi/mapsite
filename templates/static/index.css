@@ -73,7 +73,7 @@ h1 {
 
 #tagline {
   color: white;
-  text-shadow: 2px 2px 0px black;
+  text-shadow: 1px 1px 1px black;
   margin: 0 auto;
   max-width: 70%;
 }
@@ -116,7 +116,8 @@ h1 {
 }
 
 body, #info .bcg {
-  background-color:#CCDEEA;
+  background-color: #ECF0F1;
+  /*background-color:#CCDEEA;*/
 }
 
 #info {
@@ -154,18 +155,27 @@ img {
   background-color: gray;
   font-family: 'Lato', sans-serif;
   font-size: 50px;
-  color:white;
   background-image: url('example.png');
   background-size: contain;
   background-attachment: fixed;
 }
 
-#example_text {
+#example_text, #example_subtext {
   position: relative;
-  top: 50%;
   transform: translateY(-50%);
   text-align: center;
-  text-shadow: 2px 2px 2px black;
+}
+
+#example_text {
+  color:white;
+  top: 40%;
+  text-shadow: 1px 1px 1px black;
+}
+
+#example_subtext {
+  color: #003399;
+  font-size: 20px;
+  top: 40%;
 }
 
 #redux {

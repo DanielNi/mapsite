@@ -16,6 +16,7 @@
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true">
 	</script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'jquery.cookie.js' %}"></script>
 	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
 	<script type="text/javascript" src="{% static 'profile.js' %}"></script>
 </head>
@@ -24,15 +25,16 @@
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 
-			<a class="navbar-brand" href="{% url 'home' %}">Atlas</a>
+			<p class="navbar-brand">Atlas</p>
 
 			{% if user.is_authenticated %}
 			<p class="navbar-text navbar-right">Hello there, <a href="{% url 'profile' %}" class="navbar-link">{{ user.username }}</a>!&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="{% url 'auth_logout' %}" class="navbar-link">Log out</a></p>
+			{% else %}
+			<p class="navbar-text navbar-right"><a href="#" class="navbar-link">Log in</a> or <a href="#" class="navbar-link">Sign up</a> to see your own map!</p>
 			{% endif %}
 
 		</div>
 	</div>
-
 	<!-- <div class="spinner">
 		<div class="rect1"></div>
 		<div class="rect2"></div>

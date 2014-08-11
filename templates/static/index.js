@@ -11,7 +11,7 @@ var index = (function($) {
 			this.login 			= $('.login');
 			this.login_frame	= $('#login_frame');
 			this.btn_primary	= $('.btn-primary');
-			this.register_frame = $('#register_frame');	
+			this.register_frame = $('#register_frame');
 		}
 	};
 
@@ -64,14 +64,16 @@ var index = (function($) {
 
 		show_login:function() {
 			if (!elements.login_frame.is(':visible')) {
-				elements.login_frame.fadeIn();
+				elements.login_frame.fadeIn().focus();
+				elements.login_frame.contents().find('#id_username').focus();
 				elements.overlay.fadeIn();
 			}
 		},
 
 		show_register:function() {
 			if (!elements.register_frame.is(':visible')) {
-				elements.register_frame.fadeIn();
+				elements.register_frame.fadeIn().focus();
+				elements.register_frame.contents().find('#id_username').focus();
 				elements.overlay.fadeIn();
 			}
 		},

@@ -70,7 +70,7 @@ class RegistrationView(_RequestPassingFormView):
     form_class = RegistrationForm
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
     success_url = None
-    template_name = 'registration/registration_form.html'
+    template_name = 'registration_form.html'
 
     def dispatch(self, request, *args, **kwargs):
         """

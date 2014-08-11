@@ -1,23 +1,35 @@
-// $(document).ready(function() {
-// 	var map = kartograph.map('#map');
-// 	map.loadMap('/static/world.svg', function() {
-// 		map.addLayer('layer_0');
-// 	});
-// });
-function update(location, lived) {
+var csrftoken = $.cookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+function update(location, lived, update_type) {
 	$.ajax({
-		url			: '',
+		url			: '/users/',
 		type 		: 'POST',
 		dataType	: 'JSON',
 		data 		: {
-			'location' : location,
-			'lived'    : lived
+			'location' 	  : location,
+			'lived'    	  : lived,
+			'update_type' : update_type
 		},
 		success 	: function(response) {
-
+			// change the thing in the bottom right
+			console.log('success:');
+			console.log(response);
 		},
 		error 		: function(response) {
-			
+			console.log('error:');
+			console.log(response);
 		}
 	});
 }
@@ -49,6 +61,12 @@ function initialize() {
 		stylers: [
 		{ visibility: "off" }
 		]
+	},{
+		featureType: "administrative",
+		elementType: "geometry.fill",
+		stylers: [
+		{ visibility: "off" }
+		]
 	}
 	]
 	var mapOptions = {
@@ -77,6 +95,7 @@ function initialize() {
 	//
 
 	map.data.loadGeoJson("/static/countries-hires.json", {idPropertyName: 'NAME'});
+	map.data.loadGeoJson("/static/states.json", {idPropertyName: 'name'});
 
 	var locations = $("#map-canvas").data("locations");
 	var visits = $("#map-canvas").data("visits");
@@ -90,11 +109,11 @@ function initialize() {
 				var name = locations[i]['fields']['name'];
 				var feature = map.data.getFeatureById(name);
 				if (visits[i]['fields']['lived']) {
-					been.push(name);
-					feature.setProperty('been', true);
-				} else {
 					lived.push(name);
 					feature.setProperty('lived', true);
+				} else {
+					been.push(name);
+					feature.setProperty('been', true);
 				}
 			}
 			// also get rid of loading animation here
@@ -119,10 +138,11 @@ function initialize() {
 	});
 
 	map.data.addListener('click', function(event) {
-		var countryName = event.feature.getProperty('NAME');
+		var countryName = event.feature.getId();
 		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
+			update(countryName, false, 'new');
 		}
 		if (typeof infowindow !== 'undefined') {
 			infowindow.close();
@@ -160,35 +180,41 @@ function initialize() {
 				var indlive = lived.indexOf(countryName);
 				if (indlive > -1) {
 					lived.splice(indlive, 1);
+					event.feature.setProperty('lived', false);
 				}
 				if (been.indexOf(countryName) === -1) {
 					been.push(countryName);
+					event.feature.setProperty('been', true);
+					update(countryName, false, 'change');
 				}
-				event.feature.setProperty('lived', false);
-				event.feature.setProperty('been', true);
 			});
 			document.getElementById('live').addEventListener('click', function(e) {
 				var indbeen = been.indexOf(countryName);
 				if (indbeen > -1) {
 					been.splice(indbeen, 1);
+					event.feature.setProperty('been', false);
 				}
 				if (lived.indexOf(countryName) === -1) {
 					lived.push(countryName);
+					event.feature.setProperty('lived', true);
+					update(countryName, true, 'change');
 				}
-				event.feature.setProperty('been', false);
-				event.feature.setProperty('lived', true);
 			});
 			document.getElementById('cancel').addEventListener('click', function(e) {
 				var indlive = lived.indexOf(countryName);
 				var indbeen = been.indexOf(countryName);
 				if (indlive > -1) {
 					lived.splice(indlive, 1);
+					event.feature.setProperty('lived', false);
+					// add something here...
 				}
 				if (indbeen > -1) {
 					been.splice(indbeen, 1);
+					event.feature.setProperty('been', false);
+					// ..and here to indicate that this should be deleted (or just make a double if statement)
 				}
-				event.feature.setProperty('been', false);
-				event.feature.setProperty('lived', false);
+				update(countryName, false, 'cancel');
+				infowindow.close();
 			});
 		});
 	});
