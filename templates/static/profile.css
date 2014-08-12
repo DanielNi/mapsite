@@ -16,6 +16,10 @@ body {
   line-height: 24px;
 }
 
+.navbar-brand:hover {
+  cursor: default;
+}
+
 .navbar-nav {
   font-family: 'Lato', sans-serif;
   font-size: 12px;
@@ -24,6 +28,33 @@ body {
 .navbar-text {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
+}
+
+#search {
+  background-color: #fff;
+  padding: 0 11px 0 13px;
+  margin: 10px 10px 10px 10px;
+  width: 400px;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+}
+
+#search:focus {
+  border-color: #4d90fe;
+  width: 401px;
+}
+
+.controls {
+  margin-top: 16px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 a {
@@ -60,17 +91,10 @@ a:hover {
   display:none;
 }
 
-html { 
-  height: 100%;
-}
-body { 
+html, body, #map-canvas { 
   height: 100%; 
   margin: 0; 
   padding: 0;
-}
-
-#map-canvas { 
-  height: 100%;
 }
 
 .spinner {

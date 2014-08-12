@@ -12,12 +12,10 @@
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true">
-	</script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0H2gmjFao_osUOe6ZXJqZDTUO6iOuwEQ&sensor=true&libraries=places"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="{% static 'jquery.cookie.js' %}"></script>
 	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+	<script src="{% static 'jquery.cookie.js' %}"></script>
 	<script type="text/javascript" src="{% static 'profile.js' %}"></script>
 </head>
 <body>
@@ -26,6 +24,7 @@
 		<div class="container">
 
 			<p class="navbar-brand">Atlas</p>
+			<input id="search" class="navbar-left controls" type="text" placeholder="Search for a place">
 
 			{% if user.is_authenticated %}
 			<p class="navbar-text navbar-right">Hello there, <a href="{% url 'profile' %}" class="navbar-link">{{ user.username }}</a>!&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="{% url 'auth_logout' %}" class="navbar-link">Log out</a></p>
@@ -42,8 +41,6 @@
 		<div class="rect4"></div>
 		<div class="rect5"></div>
 	</div> -->
-
-	<!-- <input id="search" class="controls" type="text" placeholder="Search for a place"> -->
 
 	<div id="map-canvas" data-locations="{{ locations }}" data-visits="{{ visits }}" />
 </body>

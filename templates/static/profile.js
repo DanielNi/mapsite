@@ -232,9 +232,28 @@ function initialize() {
 	var options = {
 		types: ['(regions)']
 	};
-	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(input);
 	// var searchBox = new google.maps.places.SearchBox(
-		// /** @type {HTMLInputElement} */(input));
+	// 	/** @type {HTMLInputElement} */(input));
+	
+	var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		if (typeof infowindow !== 'undefined') {
+			infowindow.close();
+		}
+	    var place = autocomplete.getPlace();
+
+	    if (!place.geometry) {
+	    	return;
+	    }
+	    if (place.geometry.viewport) {
+	    	map.fitBounds(place.geometry.viewport);
+	    } else {
+	    	map.panTo(place.geometry.location);
+	    	if (map.getZoom() < 4)
+		    	map.setZoom(4);
+		}
+	});
 }
 	
 google.maps.event.addDomListener(window, 'load', initialize);
