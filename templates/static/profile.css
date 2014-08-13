@@ -1,7 +1,3 @@
-body {
-  background-color: rgba(0,90,151,0.4);
-}
-
 .navbar-default {
   background-color: rgba(255,255,255,0.7);
   border-color: rgba(255,255,255,0.7);
@@ -95,10 +91,11 @@ html, body, #map-canvas {
   height: 100%; 
   margin: 0; 
   padding: 0;
+  background-color: #E4E3DF;
 }
 
 .spinner {
-  margin: 100px auto;
+  margin: 50vh auto;
   width: 50px;
   height: 30px;
   text-align: center;
@@ -106,7 +103,7 @@ html, body, #map-canvas {
 }
 
 .spinner > div {
-  background-color: #333;
+  background-color: #003399;
   height: 100%;
   width: 6px;
   display: inline-block;

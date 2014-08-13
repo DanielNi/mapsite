@@ -20,6 +20,7 @@ class VisitType(models.Model):
 	location = models.ForeignKey(Location)
 	date_visited = models.DateField(auto_now=True)
 	lived = models.BooleanField(default=False)
+	# journal = models.TextField()
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

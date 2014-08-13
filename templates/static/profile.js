@@ -254,6 +254,12 @@ function initialize() {
 		    	map.setZoom(4);
 		}
 	});
+	google.maps.event.addListenerOnce(map, 'idle', function(){
+    	$('.spinner').hide();
+	});
 }
-	
+
+// $(window).on('load', function() {
+// 	$('.spinner').hide();
+// });
 google.maps.event.addDomListener(window, 'load', initialize);
