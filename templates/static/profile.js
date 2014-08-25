@@ -87,6 +87,9 @@ function initialize() {
 	var map = new google.maps.Map(document.getElementById("map-canvas"),
 		mapOptions);
 
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+		document.getElementById('infobox'));
+
 
 	// DATA LAYERS STUFF
 	// ========================================================================
@@ -99,7 +102,8 @@ function initialize() {
 
 	var locations = $("#map-canvas").data("locations");
 	var visits = $("#map-canvas").data("visits");
-	var infowindow;
+	var infobox = $('#infobox');
+	// var infowindow;
 	var been = new Array();
 	var lived = new Array();
 
@@ -138,15 +142,16 @@ function initialize() {
 	});
 
 	map.data.addListener('click', function(event) {
+		var pos = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
 		var countryName = event.feature.getId();
 		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
 			update(countryName, false, 'new');
 		}
-		if (typeof infowindow !== 'undefined') {
-			infowindow.close();
-		}
+		// if (typeof infowindow !== 'undefined') {
+		// 	infowindow.close();
+		// }
 		var contentString =
 			'<div id="content">'+
 			'<h3 class="firstHeading">'+countryName+'</h3>'+
@@ -165,17 +170,18 @@ function initialize() {
 			"</label>"+
 			'</div>'+
 			"</div>";
-		infowindow = new google.maps.InfoWindow({
-			content: contentString,
-			position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
-		});
-		map.panTo(infowindow.getPosition());
+		// infowindow = new google.maps.InfoWindow({
+		// 	content: contentString,
+		// 	position: pos
+		// });
+		map.panTo(pos);
 		if (map.getZoom() < 4) {
 			map.setZoom(4);
 		}
-		infowindow.open(map);
+		infobox.html(contentString);
+		// infowindow.open(map);
 
-		google.maps.event.addListener(infowindow, 'domready', function() {
+		// google.maps.event.addListener(infobox[0], 'domready', function() {
 			document.getElementById('been').addEventListener('click', function(e) {
 				var indlive = lived.indexOf(countryName);
 				if (indlive > -1) {
@@ -214,9 +220,8 @@ function initialize() {
 					// ..and here to indicate that this should be deleted (or just make a double if statement)
 				}
 				update(countryName, false, 'cancel');
-				infowindow.close();
 			});
-		});
+		// });
 	});
 
 	map.data.addListener('mouseover', function(event) {
@@ -238,9 +243,9 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(input, options);
 
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
-		if (typeof infowindow !== 'undefined') {
-			infowindow.close();
-		}
+		// if (typeof infowindow !== 'undefined') {
+		// 	infowindow.close();
+		// }
 	    var place = autocomplete.getPlace();
 
 	    if (!place.geometry) {
