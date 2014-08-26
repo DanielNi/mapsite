@@ -150,9 +150,27 @@ html, body, #map-canvas {
 #infobox {
   padding: 10px;
   margin: 10px;
-  height: 33vh;
-  width: 50vw;
+  height: 20vh;
+  width: 80vw;
   background-color: rgba(255,255,255,0.9);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   font-family: 'Lato', sans-serif;
+  display: table;
+}
+
+.info_title {
+  font-size: 25px;
+  text-align: center; 
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#choices {
+  display: table-cell;
+  vertical-align: middle;
+  border-right: 2px solid #000000;
+}
+
+.locationName {
+  font-size: 25px;
 }

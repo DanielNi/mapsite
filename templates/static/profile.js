@@ -1,4 +1,22 @@
 var csrftoken = $.cookie('csrftoken');
+var choices =
+	'<div id="choices">'+
+	'<div class="locationName"></div>'+
+	'<div id="choiceContent">'+
+	"<label class='choice' for='live'>"+
+	"<input id='live' type='radio' name='choice' value='#008C00' />"+
+	"<a class='Live'>◼ I've lived here.</a>"+
+	"</label><br>"+
+	"<label class='choice' for='been'>"+
+	"<input id='been' type='radio' name='choice' value='#003399' />"+
+	"<a class='Been'>◼ I've been here.</a>"+
+	"</label><br>"+
+	"<label class='choice' for='cancel'>"+
+	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+	"<a class='Cancel'>◻ Cancel</a>"+
+	"</label>"+
+	'</div>'+
+	"</div>";
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -12,6 +30,15 @@ $.ajaxSetup({
     }
 });
 
+function update_infobox(location, update_type) {
+	if (update_type === 'cancel') {
+		$('#infobox').html("<div class='info_title'>Click on somewhere you've been!</div>");
+	} else {
+		$('#infobox').html(choices);
+		$('.locationName').html(location);
+	}
+};
+
 function update(location, lived, update_type) {
 	$.ajax({
 		url			: '/users/',
@@ -23,9 +50,10 @@ function update(location, lived, update_type) {
 			'update_type' : update_type
 		},
 		success 	: function(response) {
-			// change the thing in the bottom right
+			// change the thing in the bottom
 			console.log('success:');
 			console.log(response);
+			update_infobox(location, update_type);
 		},
 		error 		: function(response) {
 			console.log('error:');
@@ -87,7 +115,7 @@ function initialize() {
 	var map = new google.maps.Map(document.getElementById("map-canvas"),
 		mapOptions);
 
-	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+	map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
 		document.getElementById('infobox'));
 
 
@@ -102,7 +130,7 @@ function initialize() {
 
 	var locations = $("#map-canvas").data("locations");
 	var visits = $("#map-canvas").data("visits");
-	var infobox = $('#infobox');
+	// var infobox = $('#infobox');
 	// var infowindow;
 	var been = new Array();
 	var lived = new Array();
@@ -148,28 +176,31 @@ function initialize() {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
 			update(countryName, false, 'new');
+		} else {
+			update_infobox(countryName);
 		}
+		// var infobox = $('#infobox');
 		// if (typeof infowindow !== 'undefined') {
 		// 	infowindow.close();
 		// }
-		var contentString =
-			'<div id="content">'+
-			'<h3 class="firstHeading">'+countryName+'</h3>'+
-			'<div id="bodyContent">'+
-			"<label class='choice' for='live'>"+
-			"<input id='live' type='radio' name='choice' value='#008C00' />"+
-			"<a class='Live'>◼ I've lived here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='been'>"+
-			"<input id='been' type='radio' name='choice' value='#003399' />"+
-			"<a class='Been'>◼ I've been here.</a>"+
-			"</label><br>"+
-			"<label class='choice' for='cancel'>"+
-			"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
-			"<a class='Cancel'>◻ Cancel</a>"+
-			"</label>"+
-			'</div>'+
-			"</div>";
+		// var contentString =
+		// 	'<div id="content">'+
+		// 	'<h3 class="locationName">'+countryName+'</h3>'+
+		// 	'<div id="bodyContent">'+
+		// 	"<label class='choice' for='live'>"+
+		// 	"<input id='live' type='radio' name='choice' value='#008C00' />"+
+		// 	"<a class='Live'>◼ I've lived here.</a>"+
+		// 	"</label><br>"+
+		// 	"<label class='choice' for='been'>"+
+		// 	"<input id='been' type='radio' name='choice' value='#003399' />"+
+		// 	"<a class='Been'>◼ I've been here.</a>"+
+		// 	"</label><br>"+
+		// 	"<label class='choice' for='cancel'>"+
+		// 	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+		// 	"<a class='Cancel'>◻ Cancel</a>"+
+		// 	"</label>"+
+		// 	'</div>'+
+		// 	"</div>";
 		// infowindow = new google.maps.InfoWindow({
 		// 	content: contentString,
 		// 	position: pos
@@ -178,50 +209,47 @@ function initialize() {
 		if (map.getZoom() < 4) {
 			map.setZoom(4);
 		}
-		infobox.html(contentString);
+		// console.log(infobox);
+		// infobox.html(contentString);
 		// infowindow.open(map);
 
-		// google.maps.event.addListener(infobox[0], 'domready', function() {
-			document.getElementById('been').addEventListener('click', function(e) {
-				var indlive = lived.indexOf(countryName);
-				if (indlive > -1) {
-					lived.splice(indlive, 1);
-					event.feature.setProperty('lived', false);
-				}
-				if (been.indexOf(countryName) === -1) {
-					been.push(countryName);
-					event.feature.setProperty('been', true);
-					update(countryName, false, 'change');
-				}
-			});
-			document.getElementById('live').addEventListener('click', function(e) {
-				var indbeen = been.indexOf(countryName);
-				if (indbeen > -1) {
-					been.splice(indbeen, 1);
-					event.feature.setProperty('been', false);
-				}
-				if (lived.indexOf(countryName) === -1) {
-					lived.push(countryName);
-					event.feature.setProperty('lived', true);
-					update(countryName, true, 'change');
-				}
-			});
-			document.getElementById('cancel').addEventListener('click', function(e) {
-				var indlive = lived.indexOf(countryName);
-				var indbeen = been.indexOf(countryName);
-				if (indlive > -1) {
-					lived.splice(indlive, 1);
-					event.feature.setProperty('lived', false);
-					// add something here...
-				}
-				if (indbeen > -1) {
-					been.splice(indbeen, 1);
-					event.feature.setProperty('been', false);
-					// ..and here to indicate that this should be deleted (or just make a double if statement)
-				}
-				update(countryName, false, 'cancel');
-			});
-		// });
+		$(document).on('click', '#been', function(e) {
+			var indlive = lived.indexOf(countryName);
+			if (indlive > -1) {
+				lived.splice(indlive, 1);
+				event.feature.setProperty('lived', false);
+			}
+			if (been.indexOf(countryName) === -1) {
+				been.push(countryName);
+				event.feature.setProperty('been', true);
+				update(countryName, false, 'change');
+			}
+		});
+		$(document).on('click', '#live', function(e) {
+			var indbeen = been.indexOf(countryName);
+			if (indbeen > -1) {
+				been.splice(indbeen, 1);
+				event.feature.setProperty('been', false);
+			}
+			if (lived.indexOf(countryName) === -1) {
+				lived.push(countryName);
+				event.feature.setProperty('lived', true);
+				update(countryName, true, 'change');
+			}
+		});
+		$(document).on('click', '#cancel', function(e) {
+			var indlive = lived.indexOf(countryName);
+			var indbeen = been.indexOf(countryName);
+			if (indlive > -1) {
+				lived.splice(indlive, 1);
+				event.feature.setProperty('lived', false);
+			}
+			if (indbeen > -1) {
+				been.splice(indbeen, 1);
+				event.feature.setProperty('been', false);
+			}
+			update(countryName, false, 'cancel');
+		});
 	});
 
 	map.data.addListener('mouseover', function(event) {
@@ -243,9 +271,6 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(input, options);
 
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
-		// if (typeof infowindow !== 'undefined') {
-		// 	infowindow.close();
-		// }
 	    var place = autocomplete.getPlace();
 
 	    if (!place.geometry) {
