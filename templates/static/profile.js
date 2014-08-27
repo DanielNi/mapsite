@@ -17,6 +17,13 @@ var choices =
 	"</label>"+
 	'</div>'+
 	"</div>";
+var stats =
+	'<div id="stats">'+
+	'<div id="percentage">'+
+	'</div>'+
+	'<div id="badge">'+
+	'</div>'+
+	'</div>';
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -30,12 +37,20 @@ $.ajaxSetup({
     }
 });
 
+function calculate_score(locations) {
+	return 100;
+}
+
 function update_infobox(location, update_type) {
 	if (update_type === 'cancel') {
 		$('#infobox').html("<div class='info_title'>Click on somewhere you've been!</div>");
 	} else {
-		$('#infobox').html(choices);
+		$('.left_side').html(choices);
+		$('.info_title').html('');
+		$('.right_side').html(stats);
 		$('.locationName').html(location);
+		$('#percentage').html('You have seen 16% of the world.');
+		$('#badge').html('You are an EXPLORER.')
 	}
 };
 

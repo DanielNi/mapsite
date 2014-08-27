@@ -149,13 +149,17 @@ html, body, #map-canvas {
 
 #infobox {
   padding: 10px;
-  margin: 10px;
   height: 20vh;
-  width: 80vw;
+  width: 100vw;
   background-color: rgba(255,255,255,0.9);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   font-family: 'Lato', sans-serif;
   display: table;
+}
+
+.left_side, .right_side {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .info_title {
@@ -168,9 +172,11 @@ html, body, #map-canvas {
 #choices {
   display: table-cell;
   vertical-align: middle;
-  border-right: 2px solid #000000;
+  line-height: 25px;
+  width: 100%;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
 }
 
-.locationName {
+.locationName, #percentage {
   font-size: 25px;
 }
