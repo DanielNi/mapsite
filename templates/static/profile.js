@@ -17,13 +17,6 @@ var choices =
 	"</label>"+
 	'</div>'+
 	"</div>";
-var stats =
-	'<div id="stats">'+
-	'<div id="percentage">'+
-	'</div>'+
-	'<div id="badge">'+
-	'</div>'+
-	'</div>';
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -41,20 +34,21 @@ function calculate_score(locations) {
 	return 100;
 }
 
-function update_infobox(location, update_type) {
+function update_infobox(update_type, location, date_visited) {
 	if (update_type === 'cancel') {
-		$('#infobox').html("<div class='info_title'>Click on somewhere you've been!</div>");
+		$('.left_side').html('');
+		$('.info_title').html("Click on somewhere you've been!");
+		$('.right_side').html('');
 	} else {
 		$('.left_side').html(choices);
 		$('.info_title').html('');
-		$('.right_side').html(stats);
 		$('.locationName').html(location);
-		$('#percentage').html('You have seen 16% of the world.');
-		$('#badge').html('You are an EXPLORER.')
+		$('#percentage').html("You've seen 16% of the world. date: " + date_visited);
+		$('#badge').html('Rank: EXPLORER')
 	}
 };
 
-function update(location, lived, update_type) {
+function update(update_type, location, lived, date_visited) {
 	$.ajax({
 		url			: '/users/',
 		type 		: 'POST',
@@ -63,12 +57,13 @@ function update(location, lived, update_type) {
 			'location' 	  : location,
 			'lived'    	  : lived,
 			'update_type' : update_type
+			'date_visited': date_visited
 		},
 		success 	: function(response) {
 			// change the thing in the bottom
 			console.log('success:');
 			console.log(response);
-			update_infobox(location, update_type);
+			update_infobox(update_type, location, date_visited);
 		},
 		error 		: function(response) {
 			console.log('error:');
@@ -161,6 +156,7 @@ function initialize() {
 				} else {
 					been.push(name);
 					feature.setProperty('been', true);
+					feature.setProperty('date_visited', visits[i]['fields']['date_visited']);
 				}
 			}
 			// also get rid of loading animation here
@@ -190,7 +186,7 @@ function initialize() {
 		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
-			update(countryName, false, 'new');
+			update('new', countryName, false, event.feature.getProperty('date_visited'));
 		} else {
 			update_infobox(countryName);
 		}
@@ -237,8 +233,10 @@ function initialize() {
 			if (been.indexOf(countryName) === -1) {
 				been.push(countryName);
 				event.feature.setProperty('been', true);
-				update(countryName, false, 'change');
+				update('change', countryName, false, 'none');
 			}
+			console.log('lived: ' + lived);
+			console.log('been: ' + been);
 		});
 		$(document).on('click', '#live', function(e) {
 			var indbeen = been.indexOf(countryName);
@@ -249,8 +247,10 @@ function initialize() {
 			if (lived.indexOf(countryName) === -1) {
 				lived.push(countryName);
 				event.feature.setProperty('lived', true);
-				update(countryName, true, 'change');
+				update('change', countryName, true, 'none');
 			}
+			console.log('lived: ' + lived);
+			console.log('been: ' + been);
 		});
 		$(document).on('click', '#cancel', function(e) {
 			var indlive = lived.indexOf(countryName);
@@ -263,7 +263,9 @@ function initialize() {
 				been.splice(indbeen, 1);
 				event.feature.setProperty('been', false);
 			}
-			update(countryName, false, 'cancel');
+			update('cancel', countryName, false, 'none');
+			console.log('lived: ' + lived);
+			console.log('been: ' + been);
 		});
 	});
 
