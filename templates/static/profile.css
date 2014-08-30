@@ -87,6 +87,10 @@ a:hover {
   display:none;
 }
 
+label {
+  margin-bottom: 0;
+}
+
 html, body, #map-canvas { 
   height: 100%; 
   margin: 0; 
@@ -157,12 +161,13 @@ html, body, #map-canvas {
   display: table;
 }
 
-.left_side, .right_side {
+#choices, #user_info {
   width: 50%;
   padding: 10px;
+  text-align: center;
 }
 
-.left_side, .right_side, .info_title {
+#choices, #user_info, .info_title {
   display: table-cell;
   vertical-align: middle;
 }
@@ -179,4 +184,8 @@ html, body, #map-canvas {
 
 .locationName, #percentage, #badge {
   font-size: 25px;
+}
+
+.locationName {
+  margin-bottom: 10px;
 }

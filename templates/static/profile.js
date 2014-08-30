@@ -1,6 +1,8 @@
 var csrftoken = $.cookie('csrftoken');
+var numLocs = 337;
+var been = new Array();
+var lived = new Array();
 var choices =
-	'<div id="choices">'+
 	'<div class="locationName"></div>'+
 	'<div id="choiceContent">'+
 	"<label class='choice' for='live'>"+
@@ -15,8 +17,7 @@ var choices =
 	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
 	"<a class='Cancel'>◻ Cancel</a>"+
 	"</label>"+
-	'</div>'+
-	"</div>";
+	'</div>';
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -30,21 +31,18 @@ $.ajaxSetup({
     }
 });
 
-function calculate_score(locations) {
-	return 100;
+function calculate_score(visited) {
+	return Math.round(visited / numLocs * 100);
 }
 
 function update_infobox(update_type, location, date_visited) {
 	if (update_type === 'cancel') {
-		$('.left_side').html('');
-		$('.info_title').html("Click on somewhere you've been!");
-		$('.right_side').html('');
+		$('#choices').html("Click on somewhere you've been!");
 	} else {
-		$('.left_side').html(choices);
-		$('.info_title').html('');
+		$('#choices').html(choices);
 		$('.locationName').html(location);
-		$('#percentage').html("You've seen 16% of the world. date: " + date_visited);
-		$('#badge').html('Rank: EXPLORER')
+		$('#percentage').html("You've seen <b>" + calculate_score(been.length + lived.length) + "%</b> of the world. date: " + date_visited);
+		$('#badge').html('Rank: EXPLORER');
 	}
 };
 
@@ -56,7 +54,7 @@ function update(update_type, location, lived, date_visited) {
 		data 		: {
 			'location' 	  : location,
 			'lived'    	  : lived,
-			'update_type' : update_type
+			'update_type' : update_type,
 			'date_visited': date_visited
 		},
 		success 	: function(response) {
@@ -133,17 +131,12 @@ function initialize() {
 	// ========================================================================
 	//
 	//
-	//
 
 	map.data.loadGeoJson("/static/countries-hires.json", {idPropertyName: 'NAME'});
 	map.data.loadGeoJson("/static/states.json", {idPropertyName: 'name'});
 
 	var locations = $("#map-canvas").data("locations");
 	var visits = $("#map-canvas").data("visits");
-	// var infobox = $('#infobox');
-	// var infowindow;
-	var been = new Array();
-	var lived = new Array();
 
 	map.data.addListener('addfeature', function(event) {
 		if (event.feature.getId() === "Zimbabwe") { // only prepopulate after every country has been added
@@ -159,7 +152,6 @@ function initialize() {
 					feature.setProperty('date_visited', visits[i]['fields']['date_visited']);
 				}
 			}
-			// also get rid of loading animation here
 		}
 	});
 
@@ -186,43 +178,16 @@ function initialize() {
 		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
-			update('new', countryName, false, event.feature.getProperty('date_visited'));
+			console.log(event.feature.getProperty('date_visited'));
+			update('new', countryName, false, 'none');
 		} else {
-			update_infobox(countryName);
+			update_infobox('none', countryName, event.feature.getProperty('date_visited'));
 		}
-		// var infobox = $('#infobox');
-		// if (typeof infowindow !== 'undefined') {
-		// 	infowindow.close();
-		// }
-		// var contentString =
-		// 	'<div id="content">'+
-		// 	'<h3 class="locationName">'+countryName+'</h3>'+
-		// 	'<div id="bodyContent">'+
-		// 	"<label class='choice' for='live'>"+
-		// 	"<input id='live' type='radio' name='choice' value='#008C00' />"+
-		// 	"<a class='Live'>◼ I've lived here.</a>"+
-		// 	"</label><br>"+
-		// 	"<label class='choice' for='been'>"+
-		// 	"<input id='been' type='radio' name='choice' value='#003399' />"+
-		// 	"<a class='Been'>◼ I've been here.</a>"+
-		// 	"</label><br>"+
-		// 	"<label class='choice' for='cancel'>"+
-		// 	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
-		// 	"<a class='Cancel'>◻ Cancel</a>"+
-		// 	"</label>"+
-		// 	'</div>'+
-		// 	"</div>";
-		// infowindow = new google.maps.InfoWindow({
-		// 	content: contentString,
-		// 	position: pos
-		// });
+
 		map.panTo(pos);
 		if (map.getZoom() < 4) {
 			map.setZoom(4);
 		}
-		// console.log(infobox);
-		// infobox.html(contentString);
-		// infowindow.open(map);
 
 		$(document).on('click', '#been', function(e) {
 			var indlive = lived.indexOf(countryName);
@@ -282,8 +247,6 @@ function initialize() {
 	var options = {
 		types: ['(regions)']
 	};
-	// var searchBox = new google.maps.places.SearchBox(
-	// 	/** @type {HTMLInputElement} */(input));
 	
 	var autocomplete = new google.maps.places.Autocomplete(input, options);
 
@@ -306,7 +269,4 @@ function initialize() {
 	});
 }
 
-// $(window).on('load', function() {
-// 	$('.spinner').hide();
-// });
 google.maps.event.addDomListener(window, 'load', initialize);
