@@ -67,7 +67,7 @@ ROOT_URLCONF = 'mapsite.urls'
 WSGI_APPLICATION = 'mapsite.wsgi.application'
 
 TEMPLATE_DIRS = (
-'/Users/DanNi/projects/new_project/mapsite/templates'
+    os.path.join(BASE_DIR, "templates")
 )
 
 # Database
