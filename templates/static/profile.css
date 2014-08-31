@@ -162,12 +162,31 @@ html, body, #map-canvas {
 }
 
 #choices, #user_info {
-  width: 50%;
   padding: 10px;
   text-align: center;
 }
 
-#choices, #user_info, .info_title {
+#user_info, #message {
+  width: 50%;
+}
+
+#message {
+  font-size: 25px;
+  text-align: center;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+#choices, #datepicker {
+  vertical-align: middle;
+  display: none;
+}
+
+#datepicker {
+  width: 25%;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+#user_info, #message {
   display: table-cell;
   vertical-align: middle;
 }
@@ -178,12 +197,17 @@ html, body, #map-canvas {
 }
 
 #choices {
+  width: 25%;
   line-height: 25px;
-  border-right: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 .locationName, #percentage, #badge {
   font-size: 25px;
+}
+
+#question {
+  font-size: 15px;
+  margin-bottom: 5px;
 }
 
 .locationName {

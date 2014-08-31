@@ -10,11 +10,15 @@ def profile(request):
 	if request.is_ajax():
 		location = request.POST['location']
 		lived = (request.POST['lived'] == 'true')
+		date_visited = request.POST['date_visited']
 		update_type = request.POST['update_type']
 		loc, loc_created = Location.objects.get_or_create(name=location)
 
 		if update_type == 'change':
 			rows = VisitType.objects.filter(user_profile=profile, location=loc).update(lived=lived)
+			success = rows > 0
+		elif update_type == 'date' and date_visited:
+			rows = VisitType.objects.filter(user_profile=profile, location=loc).update(date_visited=date_visited)
 			success = rows > 0
 		elif update_type == 'new':
 			new_vis = VisitType.objects.create(user_profile=profile, location=loc, lived=lived)

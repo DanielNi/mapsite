@@ -6,15 +6,15 @@ var choices =
 	'<div class="locationName"></div>'+
 	'<div id="choiceContent">'+
 	"<label class='choice' for='live'>"+
-	"<input id='live' type='radio' name='choice' value='#008C00' />"+
+	"<input id='live' type='radio' name='choice' />"+
 	"<a class='Live'>◼ I've lived here.</a>"+
 	"</label><br>"+
 	"<label class='choice' for='been'>"+
-	"<input id='been' type='radio' name='choice' value='#003399' />"+
+	"<input id='been' type='radio' name='choice' />"+
 	"<a class='Been'>◼ I've been here.</a>"+
 	"</label><br>"+
 	"<label class='choice' for='cancel'>"+
-	"<input id='cancel' type='radio' name='choice' value='#FFFFFF' />"+
+	"<input id='cancel' type='radio' name='choice' />"+
 	"<a class='Cancel'>◻ Cancel</a>"+
 	"</label>"+
 	'</div>';
@@ -23,6 +23,7 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -31,20 +32,58 @@ $.ajaxSetup({
     }
 });
 
+function set_date(date_visited) {
+	var datepicker =
+		'<div id="question">When were you here?</div>'+
+		'<form id="date_form">'+
+		'<input type="date" id="date"';
+	if (date_visited) {
+		datepicker += 'value=' + date_visited;
+	}
+	datepicker += '>'+
+		'</input>'+
+		'<input type="submit" value="Save">'+
+		'</form>';
+	$('#datepicker').html(datepicker);
+}
+
 function calculate_score(visited) {
 	return Math.round(visited / numLocs * 100);
 }
 
+function calculate_rank(score) {
+	if (score < 5) {
+		return 'SIGHTSEER';
+	} else if (score < 10) {
+		return 'EXPLORER';
+	} else if (score < 15) {
+		return 'ADVENTURER';
+	} else if (score < 25) {
+		return 'JOURNEYER';
+	} else if (score < 50) {
+		return 'VOYAGER';
+	} else {
+		return 'GLOBETROTTER';
+	}
+}
+
 function update_infobox(update_type, location, date_visited) {
 	if (update_type === 'cancel') {
-		$('#choices').html("Click on somewhere you've been!");
+		$('#message').show();
+		$('#choices').hide();
+		$('#datepicker').hide();
 	} else {
-		$('#choices').html(choices);
+		$('#message').hide();
+		$('#choices').css("display", "table-cell").html(choices);
+		$('#datepicker').css("display", "table-cell");
+		set_date(date_visited);
 		$('.locationName').html(location);
-		$('#percentage').html("You've seen <b>" + calculate_score(been.length + lived.length) + "%</b> of the world. date: " + date_visited);
-		$('#badge').html('Rank: EXPLORER');
 	}
-};
+	var score = calculate_score(been.length + lived.length);
+	var weighted_score = calculate_score(been.length + (lived.length * 1.5));
+	$('#percentage').html("You've seen <b>" + score + "%</b> of the world.");
+	$('#badge').html('Rank: <b>' + calculate_rank(weighted_score) + '</b>');
+}
 
 function update(update_type, location, lived, date_visited) {
 	$.ajax({
@@ -58,14 +97,12 @@ function update(update_type, location, lived, date_visited) {
 			'date_visited': date_visited
 		},
 		success 	: function(response) {
-			// change the thing in the bottom
 			console.log('success:');
 			console.log(response);
 			update_infobox(update_type, location, date_visited);
 		},
 		error 		: function(response) {
-			console.log('error:');
-			console.log(response);
+			alert("There was a problem saving your changes. Please try again.");
 		}
 	});
 }
@@ -152,6 +189,7 @@ function initialize() {
 					feature.setProperty('date_visited', visits[i]['fields']['date_visited']);
 				}
 			}
+			update_infobox('cancel', '', false);
 		}
 	});
 
@@ -178,8 +216,7 @@ function initialize() {
 		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
 			event.feature.setProperty('been', true);
 			been.push(countryName);
-			console.log(event.feature.getProperty('date_visited'));
-			update('new', countryName, false, 'none');
+			update('new', countryName, false, false);
 		} else {
 			update_infobox('none', countryName, event.feature.getProperty('date_visited'));
 		}
@@ -188,6 +225,10 @@ function initialize() {
 		if (map.getZoom() < 4) {
 			map.setZoom(4);
 		}
+
+		$(document).off('click', '#been');
+		$(document).off('click', '#live');
+		$(document).off('click', '#cancel');
 
 		$(document).on('click', '#been', function(e) {
 			var indlive = lived.indexOf(countryName);
@@ -198,7 +239,7 @@ function initialize() {
 			if (been.indexOf(countryName) === -1) {
 				been.push(countryName);
 				event.feature.setProperty('been', true);
-				update('change', countryName, false, 'none');
+				update('change', countryName, false, false);
 			}
 			console.log('lived: ' + lived);
 			console.log('been: ' + been);
@@ -212,7 +253,7 @@ function initialize() {
 			if (lived.indexOf(countryName) === -1) {
 				lived.push(countryName);
 				event.feature.setProperty('lived', true);
-				update('change', countryName, true, 'none');
+				update('change', countryName, true, false);
 			}
 			console.log('lived: ' + lived);
 			console.log('been: ' + been);
@@ -228,9 +269,13 @@ function initialize() {
 				been.splice(indbeen, 1);
 				event.feature.setProperty('been', false);
 			}
-			update('cancel', countryName, false, 'none');
+			update('cancel', countryName, false, false);
 			console.log('lived: ' + lived);
 			console.log('been: ' + been);
+		});
+		$(document).on('submit', '#date_form', function(e) {
+			update('date', countryName, null, document.getElementById('date').value);
+			return false;
 		});
 	});
 
