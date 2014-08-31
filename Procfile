@@ -1,1 +1,1 @@
-web: gunicorn myatlas.wsgi --log-file -
+web: gunicorn mapsite.wsgi --log-file -
