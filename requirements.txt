@@ -3,3 +3,4 @@ South==0.8.4
 django-markdown-deux==1.0.4
 markdown2==2.2.0
 wsgiref==0.1.2
+gunicorn==19.0.0
