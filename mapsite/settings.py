@@ -22,11 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'a!77rk4^n1@r30edy#a&2vfv0dg91@l2aq&33mol&l_z0cx=!4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'myatlas.herokuapp.com']
 
 
 # Application definition
@@ -98,9 +98,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "templates/static")
+    os.path.join(BASE_DIR, "templates/static"),
 )
 
 LOGIN_URL=reverse_lazy('login')
