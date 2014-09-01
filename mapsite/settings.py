@@ -82,7 +82,7 @@ TEMPLATE_DIRS = (
 import dj_database_url
 
 # DATABASE_URL = "postgres://mcogdveagcwkmx:JJdD1y1KUMuBsRtcVUKVO72BSL@ec2-50-19-219-235.compute-1.amazonaws.com:5432/d6n3pnsge437ve"
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = {'default': dj_database_url.config()}
 # DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 # Internationalization
