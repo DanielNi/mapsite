@@ -97,11 +97,12 @@ function update(update_type, location, lived, date_visited) {
 			'date_visited': date_visited
 		},
 		success 	: function(response) {
-			console.log('success:');
-			console.log(response);
+			// console.log('success:');
+			// console.log(response);
 			update_infobox(update_type, location, date_visited);
 		},
 		error 		: function(response) {
+			// console.log(response);
 			alert("There was a problem saving your changes. Please try again.");
 		}
 	});
@@ -241,8 +242,8 @@ function initialize() {
 				event.feature.setProperty('been', true);
 				update('change', countryName, false, false);
 			}
-			console.log('lived: ' + lived);
-			console.log('been: ' + been);
+			// console.log('lived: ' + lived);
+			// console.log('been: ' + been);
 		});
 		$(document).on('click', '#live', function(e) {
 			var indbeen = been.indexOf(countryName);
@@ -255,8 +256,8 @@ function initialize() {
 				event.feature.setProperty('lived', true);
 				update('change', countryName, true, false);
 			}
-			console.log('lived: ' + lived);
-			console.log('been: ' + been);
+			// console.log('lived: ' + lived);
+			// console.log('been: ' + been);
 		});
 		$(document).on('click', '#cancel', function(e) {
 			var indlive = lived.indexOf(countryName);
@@ -270,8 +271,8 @@ function initialize() {
 				event.feature.setProperty('been', false);
 			}
 			update('cancel', countryName, false, false);
-			console.log('lived: ' + lived);
-			console.log('been: ' + been);
+			// console.log('lived: ' + lived);
+			// console.log('been: ' + been);
 		});
 		$(document).on('submit', '#date_form', function(e) {
 			update('date', countryName, null, document.getElementById('date').value);
