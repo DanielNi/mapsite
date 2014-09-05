@@ -26,7 +26,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'myatlas.herokuapp.com', 'myatlas.me']
+ALLOWED_HOSTS = ['localhost', 'myatlas.herokuapp.com', '.myatlas.me']
 
 
 # Application definition
