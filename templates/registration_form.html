@@ -11,6 +11,7 @@
   <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <!-- <script type="text/javascript" src="{% static 'register.js' %}"/></script> -->
 </head>
 
 <body>
@@ -33,7 +34,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
 
-    <h3 class="login"><a href="{% url 'auth_login' %}"> Already have an account? Sign in here. </a></h3>
+    <h3 class="login"><a id="login_switch" href="javascript:void(0);"> Already have an account? Sign in here. </a></h3>
 
 </div>
 

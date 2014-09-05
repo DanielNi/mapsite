@@ -12,6 +12,7 @@ var index = (function($) {
 			this.login_frame	= $('#login_frame');
 			this.btn_primary	= $('.btn-primary');
 			this.register_frame = $('#register_frame');
+			this.login_switch   = this.register_frame.find('#login_switch');
 		}
 	};
 
