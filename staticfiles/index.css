@@ -111,6 +111,16 @@ h1 {
   outline: none;
 }
 
+section {
+  left: 0;
+  right: 0;
+}
+
+#main {
+  position: absolute;
+  top: 0;
+}
+
 #main .bcg {
   background-image:url('background2.jpg');
 }
@@ -121,7 +131,9 @@ body, #info .bcg {
 }
 
 #info {
-  height:55vh;
+  position: absolute;
+  top: 100%;
+  height: 55%;
   padding-top: 5%;
   padding-bottom: 5%;
   text-align: center;
@@ -151,35 +163,46 @@ img {
 }
 
 #example {
-  height: 100vh;
+  position: absolute;
+  top: 155%;
+  height: 100%;
   background-color: gray;
   font-family: 'Lato', sans-serif;
-  font-size: 50px;
   background-image: url('example.png');
-  background-size: contain;
+  background-size: cover;
   background-attachment: fixed;
+  text-align: center;
 }
 
 #example_text, #example_subtext {
   position: relative;
   transform: translateY(-50%);
-  text-align: center;
+  top: 40%;
 }
 
 #example_text {
   color:white;
-  top: 40%;
+  font-size: 50px;
   text-shadow: 1px 1px 1px black;
 }
 
 #example_subtext {
-  color: #003399;
   font-size: 20px;
-  top: 40%;
+}
+
+#example_link {
+  color: white;
+}
+
+#example_link:hover {
+  text-decoration: none;
+  color: white;
 }
 
 #redux {
-  height: 90vh;
+  position: absolute;
+  top: 255%;
+  height: 90%;
 }
 
 #redux .bcg {
@@ -187,10 +210,12 @@ img {
 }
 
 #contact {
+  position: absolute;
   font-family: 'Lato', sans-serif;
-  height: 10vh;
+  top: 345%;
+  height: 10%;
   text-align: center;
   color: black;
   background-color: rgba(255, 255, 255, 0.9);
-  padding-top: 15px;
+  padding-top: 30px;
 }

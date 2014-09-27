@@ -1,34 +1,8 @@
 var choices =
 	'<div class="locationName"></div>'+
-	'<div id="choiceContent">'+
-	"<label class='choice' for='live'>"+
-	"<input id='live' type='radio' name='choice' />"+
-	"<a class='Live'>◼ I've lived here.</a>"+
-	"</label><br>"+
-	"<label class='choice' for='been'>"+
-	"<input id='been' type='radio' name='choice' />"+
-	"<a class='Been'>◼ I've been here.</a>"+
-	"</label><br>"+
-	"<label class='choice' for='cancel'>"+
-	"<input id='cancel' type='radio' name='choice' />"+
-	"<a class='Cancel'>◻ Cancel</a>"+
-	"</label>"+
-	'</div>';
-
-function set_date(date_visited) {
-	var datepicker =
-		'<div id="question">When were you here?</div>'+
-		'<form id="date_form">'+
-		'<input type="date" id="date"';
-	if (date_visited) {
-		datepicker += 'value=' + date_visited;
-	}
-	datepicker += '>'+
-		'</input>'+
-		'<input type="submit" value="Save">'+
-		'</form>';
-	$('#datepicker').html(datepicker);
-}
+	"<div class='Been' style='display: none;'>You went here on <b>May 4th, 2014</b>.</div>"+
+	"<div class='Live' style='display: none;'>You lived here from <b>February 2004</b> to <b>March 2010</b>.</div>"+
+	"<div class='Cancel' style='display: none;'>You've never been here before!</div>";
 
 function calculate_rank(score) {
 	if (score < 5) {
@@ -50,13 +24,19 @@ function update_infobox(update_type, location, date_visited) {
 	if (update_type === 'cancel') {
 		$('#message').show();
 		$('#choices').hide();
-		$('#datepicker').hide();
+		$('#facebook').hide();
 	} else {
 		$('#message').hide();
 		$('#choices').css("display", "table-cell").html(choices);
-		$('#datepicker').css("display", "table-cell");
-		// set_date(date_visited);
+		$('#facebook').css("display", "table-cell");
 		$('.locationName').html(location);
+		if (update_type === 'been') {
+			$('.Been').show();
+		} else if (update_type === 'live') {
+			$('.Live').show();
+		} else {
+			$('.Cancel').show();
+		}
 	}
 }
 
@@ -172,8 +152,10 @@ function initialize() {
 	map.data.addListener('click', function(event) {
 		var pos = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
 		var countryName = event.feature.getId();
-		if (!event.feature.getProperty('been') && !event.feature.getProperty('lived')) {
-			update_infobox('new', countryName, false);
+		if (event.feature.getProperty('been')) {
+			update_infobox('been', countryName, event.feature.getProperty('date_visited'));
+		} else if (event.feature.getProperty('lived')) {
+			update_infobox('live', countryName, event.feature.getProperty('date_visited'));
 		} else {
 			update_infobox('none', countryName, event.feature.getProperty('date_visited'));
 		}

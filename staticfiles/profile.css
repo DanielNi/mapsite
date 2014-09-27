@@ -12,10 +12,6 @@
   line-height: 24px;
 }
 
-.navbar-brand:hover {
-  cursor: default;
-}
-
 .navbar-nav {
   font-family: 'Lato', sans-serif;
   font-size: 12px;
@@ -176,7 +172,7 @@ html, body, #map-canvas {
   border-right: 2px solid rgba(0, 0, 0, 0.3);
 }
 
-#choices, #datepicker {
+#choices, #datepicker, #facebook {
   vertical-align: middle;
   display: none;
 }
@@ -184,6 +180,14 @@ html, body, #map-canvas {
 #datepicker {
   width: 25%;
   border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+#facebook {
+  font-size: 18px;
+  text-align: center;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  padding-right: 50px;
 }
 
 #user_info, #message {
