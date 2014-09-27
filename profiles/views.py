@@ -17,7 +17,7 @@ def profile(request):
 		if update_type == 'change':
 			rows = VisitType.objects.filter(user_profile=profile, location=loc).update(lived=lived)
 			success = rows > 0
-		elif update_type == 'date' and date_visited:
+		elif update_type == 'date':
 			rows = VisitType.objects.filter(user_profile=profile, location=loc).update(date_visited=date_visited)
 			success = rows > 0
 		elif update_type == 'new':

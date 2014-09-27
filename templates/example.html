@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
 	<script src="{% static 'jquery.cookie.js' %}"></script>
-	<script type="text/javascript" src="{% static 'profile.js' %}"></script>
+	<script type="text/javascript" src="{% static 'example.js' %}"></script>
 	<link rel="shortcut icon" href="{% static 'atlas_favicon.ico' %}" >
 </head>
 <body>
@@ -27,11 +27,7 @@
 			<p class="navbar-brand">Atlas</p>
 			<input id="search" class="navbar-left controls" type="text" placeholder="Search for a place">
 
-			{% if user.is_authenticated %}
-			<p class="navbar-text navbar-right">Hello there, <a href="{% url 'profile' %}" class="navbar-link">{{ user.username }}</a>!&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="{% url 'auth_logout' %}" class="navbar-link">Log out</a></p>
-			{% else %}
 			<p class="navbar-text navbar-right"><a href="#" class="navbar-link"><b>Log in</b></a> or <a href="#" class="navbar-link"><b>Sign up</b></a> to see your own map!</p>
-			{% endif %}
 
 		</div>
 	</div>
@@ -44,21 +40,22 @@
 	</div>
 
 	<div id="infobox">
-		<div id="message">Click on somewhere you've been!</div>
+		<div id="message">Click on any country!</div>
 		<div id="choices"></div>
 		<div id="datepicker"></div>
-		<!-- <div class="info_title">Just click on somewhere you've been to get started!</div> -->
 		<div id="user_info">
 			<div id="stats">
 				<div id="percentage">
+					You've seen <b>14%</b> of the world.
 				</div>
 				<div id="badge">
+					Rank: <b>ADVENTURER</b>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="map-canvas" data-locations="{{ locations }}" data-visits="{{ visits }}" />
+	<div id="map-canvas"/>
 
 </body>
 </html>
