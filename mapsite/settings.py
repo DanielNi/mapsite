@@ -73,17 +73,17 @@ TEMPLATE_DIRS = (
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 import dj_database_url
 
-# DATABASE_URL = "postgres://mcogdveagcwkmx:JJdD1y1KUMuBsRtcVUKVO72BSL@ec2-50-19-219-235.compute-1.amazonaws.com:5432/d6n3pnsge437ve"
-# DATABASES = {'default': dj_database_url.config()}
-# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+DATABASE_URL = "postgres://mcogdveagcwkmx:JJdD1y1KUMuBsRtcVUKVO72BSL@ec2-50-19-219-235.compute-1.amazonaws.com:5432/d6n3pnsge437ve"
+DATABASES = {'default': dj_database_url.config()}
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
